@@ -1,0 +1,41 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 1.
+Hexadecimal [16-Bits]
+
+
+
+                              1 ;;
+                              2 ;;ENTITY MANAGER
+                              3 ;;
+                     0003     4 max_entities == 3
+                     0007     5 entity_size  == 7
+                              6 
+   0000 00                    7 _num_entities:: .db 0 
+   0001 03 00                 8 _last_elem_ptr:: .dw _entity_array
+   0003                       9 _entity_array:: .ds max_entities*entity_size
+                             10 
+                             11 
+   0018                      12 entityman_getEntityArray_IX::
+   0018 DD 21 03 00   [14]   13     ld  ix, #_entity_array
+   001C C9            [10]   14     ret
+                             15 
+   001D                      16 entityman_getNumEntities_A::
+   001D 3A 00 00      [13]   17     ld  a, (_num_entities)
+   0020 C9            [10]   18     ret
+                             19 
+                             20 ;;INPUT
+                             21 ;;  HL: pointer to entity initializer bytes
+   0021                      22 entityman_create::
+   0021 ED 5B 01 00   [20]   23     ld de, (_last_elem_ptr)
+   0025 01 07 00      [10]   24     ld bc, #entity_size
+   0028 ED B0         [21]   25     ldir
+                             26 
+   002A 3A 00 00      [13]   27     ld a, (_num_entities)
+   002D 3C            [ 4]   28     inc a
+   002E 32 00 00      [13]   29     ld (_num_entities), a
+                             30 
+   0031 2A 01 00      [16]   31     ld hl, (_last_elem_ptr)
+   0034 01 07 00      [10]   32     ld bc, #entity_size
+   0037 09            [11]   33     add hl, bc
+   0038 22 01 00      [16]   34     ld  (_last_elem_ptr), hl
+                             35 
+   003B C9            [10]   36     ret

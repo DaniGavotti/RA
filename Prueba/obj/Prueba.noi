@@ -1,0 +1,24 @@
+DEF .__.ABS. 0x0
+DEF l__DATA 0x0
+DEF max_entities 0x3
+DEF entity_size 0x7
+DEF l__CODE 0x161
+DEF s__CODE 0x4000
+DEF s__DATA 0x4161
+DEF _num_entities 0x4000
+DEF _last_elem_ptr 0x4001
+DEF _entity_array 0x4003
+DEF entityman_getEntityArray_IX 0x4018
+DEF entityman_getNumEntities_A 0x401D
+DEF entityman_create 0x4021
+DEF _main 0x404A
+DEF rendersys_init 0x4064
+DEF rendersys_update 0x4064
+DEF _cpct_disableFirmware 0x4088
+DEF _cpct_removeInterruptHandler 0x4088
+DEF cpct_disableFirmware_asm 0x4088
+DEF cpct_removeInterruptHandler_asm 0x4088
+DEF cpct_drawSolidBox_asm 0x4098
+DEF cpct_getScreenPtr_asm 0x4144
+DEF _cpct_mode_rom_status 0x4160
+LOAD obj/Prueba.ihx
