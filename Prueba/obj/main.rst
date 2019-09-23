@@ -2511,26 +2511,32 @@ Hexadecimal [16-Bits]
                               3 .area _DATA
                               4 .area _CODE
                               5 
-   403C 14 14 02 08 01 01     6 player: .db 20, 20, 2, 8, 1, 1, 0x0F
+   405C 14 14 02 08 01 01     6 player: .db 20, 20, 2, 8, 1, 1, 0x0F
         0F
-   4043 28 28 04 08 00 00     7 enemy: .db 40, 40, 4, 8, 0, 0, 0xFF
+   4063 28 28 04 08 FF 02     7 enemy: .db 40, 40, 4, 8, -1, 2, 0xFF
         FF
                               8 
-   404A                       9 _main::
+   406A                       9 _main::
                              10    ;; Disable firmware to prevent it from interfering with string drawing
-   404A CD 88 40      [17]   11    call cpct_disableFirmware_asm
+   406A CD BC 40      [17]   11    call cpct_disableFirmware_asm
                              12 
-   404D 21 3C 40      [10]   13    ld hl, #player
-   4050 CD 21 40      [17]   14    call entityman_create
+   406D 21 5C 40      [10]   13    ld hl, #player
+   4070 CD 21 40      [17]   14    call entityman_create
                              15 
-   4053 21 43 40      [10]   16    ld hl, #enemy
-   4056 CD 21 40      [17]   17    call entityman_create
+   4073 21 63 40      [10]   16    ld hl, #enemy
+   4076 CD 21 40      [17]   17    call entityman_create
                              18 
-   4059                      19 loop:
-   4059 CD 18 40      [17]   20    call entityman_getEntityArray_IX
-   405C CD 1D 40      [17]   21    call entityman_getNumEntities_A
+   4079                      19 loop:
+                             20 
+   4079 CD B4 40      [17]   21    call cpct_waitVSYNC_asm
                              22 
-   405F CD 64 40      [17]   23    call rendersys_update
-                             24 
-   4062 18 F5         [12]   25    jr loop
+   407C CD 18 40      [17]   23    call entityman_getEntityArray_IX
+   407F CD 1D 40      [17]   24    call entityman_getNumEntities_A
+   4082 CD 3C 40      [17]   25    call phy_update
                              26 
+   4085 CD 18 40      [17]   27    call entityman_getEntityArray_IX
+   4088 CD 1D 40      [17]   28    call entityman_getNumEntities_A
+   408B CD 90 40      [17]   29    call rendersys_update
+                             30 
+   408E 18 E9         [12]   31    jr loop
+                             32 

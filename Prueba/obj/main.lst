@@ -2513,7 +2513,7 @@ Hexadecimal [16-Bits]
                               5 
    0000 14 14 02 08 01 01     6 player: .db 20, 20, 2, 8, 1, 1, 0x0F
         0F
-   0007 28 28 04 08 00 00     7 enemy: .db 40, 40, 4, 8, 0, 0, 0xFF
+   0007 28 28 04 08 FF 02     7 enemy: .db 40, 40, 4, 8, -1, 2, 0xFF
         FF
                               8 
    000E                       9 _main::
@@ -2527,10 +2527,16 @@ Hexadecimal [16-Bits]
    001A CD 00 00      [17]   17    call entityman_create
                              18 
    001D                      19 loop:
-   001D CD 00 00      [17]   20    call entityman_getEntityArray_IX
-   0020 CD 00 00      [17]   21    call entityman_getNumEntities_A
+                             20 
+   001D CD 00 00      [17]   21    call cpct_waitVSYNC_asm
                              22 
-   0023 CD 00 00      [17]   23    call rendersys_update
-                             24 
-   0026 18 F5         [12]   25    jr loop
+   0020 CD 00 00      [17]   23    call entityman_getEntityArray_IX
+   0023 CD 00 00      [17]   24    call entityman_getNumEntities_A
+   0026 CD 00 00      [17]   25    call phy_update
                              26 
+   0029 CD 00 00      [17]   27    call entityman_getEntityArray_IX
+   002C CD 00 00      [17]   28    call entityman_getNumEntities_A
+   002F CD 00 00      [17]   29    call rendersys_update
+                             30 
+   0032 18 E9         [12]   31    jr loop
+                             32 
