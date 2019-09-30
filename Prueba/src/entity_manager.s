@@ -2,7 +2,7 @@
 ;;ENTITY MANAGER
 ;;
 max_entities == 3
-entity_size  == 7
+entity_size  == 9
 
 _num_entities:: .db 0 
 _last_elem_ptr:: .dw _entity_array

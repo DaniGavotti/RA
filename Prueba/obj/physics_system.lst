@@ -16,20 +16,21 @@ Hexadecimal [16-Bits]
    0000                      11 _phyloop:
    0000 F5            [11]   12     push af
                              13 
-   0001 11 00 C0      [10]   14     ld de, #0xC000
-   0004 DD 7E 01      [19]   15     ld  a, 1(ix)    ;;y
-   0007 DD 86 05      [19]   16     add 5(ix)
-   000A DD 77 01      [19]   17     ld  1(ix), a
+                             14     ;;Updates y
+   0001 DD 7E 01      [19]   15     ld  a, 1(ix)    ;;y
+   0004 DD 86 05      [19]   16     add 5(ix)
+   0007 DD 77 01      [19]   17     ld  1(ix), a
                              18 
-   000D DD 7E 00      [19]   19     ld  a, 0(ix)    ;;x
-   0010 DD 86 04      [19]   20     add 4(ix)
-   0013 DD 77 00      [19]   21     ld  0(ix), a
-                             22 
-   0016 F1            [10]   23     pop af
-                             24 
-   0017 3D            [ 4]   25     dec a
-   0018 C8            [11]   26     ret z
-                             27 
-   0019 01 00 00      [10]   28     ld bc, #entity_size
-   001C DD 09         [15]   29     add ix, bc
-   001E 18 E0         [12]   30     jr _phyloop
+                             19     ;;Updates x
+   000A DD 7E 00      [19]   20     ld  a, 0(ix)    ;;x
+   000D DD 86 04      [19]   21     add 4(ix)
+   0010 DD 77 00      [19]   22     ld  0(ix), a
+                             23 
+   0013 F1            [10]   24     pop af
+                             25 
+   0014 3D            [ 4]   26     dec a
+   0015 C8            [11]   27     ret z
+                             28 
+   0016 01 00 00      [10]   29     ld bc, #entity_size
+   0019 DD 09         [15]   30     add ix, bc
+   001B 18 E3         [12]   31     jr _phyloop

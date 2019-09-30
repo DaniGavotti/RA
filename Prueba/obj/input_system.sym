@@ -54,18 +54,18 @@ Symbol Table
     Key_U   =  0405     |     Key_V   =  8006     |     Key_W   =  0807 
     Key_X   =  8007     |     Key_Y   =  0805     |     Key_Z   =  8008 
     PAL_INKR=  0040     |     PAL_PENR=  0000     |     PPI_PORT=  00F5 
-  0 _main      0010 GR  |     cpct_dis   **** GX  |     cpct_pag=  0000 
-    cpct_pag=  0010     |     cpct_pag=  0020     |     cpct_pag=  0030 
-    cpct_wai   **** GX  |   0 enemy      0008 R   |     entityma   **** GX
-    entityma   **** GX  |     entityma   **** GX  |     inputsys   **** GX
+  0 _notPres   003C R   |   0 _notPres   0018 R   |   0 _notPres   0024 R
+  0 _notPres   0030 R   |   0 _pressed   0038 R   |   0 _pressed   0014 R
+  0 _pressed   0020 R   |   0 _pressed   002C R   |     cpct_isK   **** GX
+    cpct_pag=  0000     |     cpct_pag=  0010     |     cpct_pag=  0020 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Symbol Table
 
-  0 loop       001F R   |     opc_DI  =  00F3     |     opc_EI  =  00FB 
-    opc_JR  =  0018     |     opc_LD_D=  0016     |     phy_upda   **** GX
-  0 player     0000 R   |     rendersy   **** GX
+    cpct_pag=  0030     |     cpct_sca   **** GX  |   0 inputsys   0000 GR
+  0 inputsys   0001 GR  |     opc_DI  =  00F3     |     opc_EI  =  00FB 
+    opc_JR  =  0018     |     opc_LD_D=  0016 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]
@@ -73,5 +73,4 @@ Hexadecimal [16-Bits]
 Area Table
 
    0 _CODE      size   3C   flags    0
-   1 _DATA      size    0   flags    0
 
