@@ -2528,37 +2528,39 @@ Hexadecimal [16-Bits]
    40A0 DD 36 05 00   [19]   15     ld 5(ix), #0 ;;y_speed
                              16 
                              17     ;;Scan Keys
-   40A4 CD 2D 41      [17]   18     call cpct_scanKeyboard_f_asm
+   40A4 CD 2E 41      [17]   18     call cpct_scanKeyboard_f_asm
                              19 
                              20     ;;If O pressed
    40A7 21 04 04      [10]   21     ld hl, #Key_O
-   40AA CD 97 41      [17]   22     call cpct_isKeyPressed_asm
-   40AD 20 04         [12]   23     jr nz, _notPressed_O
+   40AA CD 98 41      [17]   22     call cpct_isKeyPressed_asm
+   40AD 28 04         [12]   23     jr z, _notPressed_O
    40AF                      24 _pressed_O:
    40AF DD 36 04 FF   [19]   25     ld 4(ix), #-1
    40B3                      26 _notPressed_O:
                              27 
                              28     ;;If P pressed
    40B3 21 03 08      [10]   29     ld hl, #Key_P
-   40B6 CD 97 41      [17]   30     call cpct_isKeyPressed_asm
-   40B9 20 04         [12]   31     jr nz, _notPressed_P
+   40B6 CD 98 41      [17]   30     call cpct_isKeyPressed_asm
+   40B9 28 04         [12]   31     jr z, _notPressed_P
    40BB                      32 _pressed_P:
    40BB DD 36 04 01   [19]   33     ld 4(ix), #1
    40BF                      34 _notPressed_P:
                              35 
                              36     ;;If Q pressed
    40BF 21 08 08      [10]   37     ld hl, #Key_Q
-   40C2 CD 97 41      [17]   38     call cpct_isKeyPressed_asm
-   40C5 20 04         [12]   39     jr nz, _notPressed_Q
+   40C2 CD 98 41      [17]   38     call cpct_isKeyPressed_asm
+   40C5 28 04         [12]   39     jr z, _notPressed_Q
    40C7                      40 _pressed_Q:
    40C7 DD 36 05 FF   [19]   41     ld 5(ix), #-1
    40CB                      42 _notPressed_Q:
                              43 
                              44     ;;If A pressed
    40CB 21 08 20      [10]   45     ld hl, #Key_A
-   40CE CD 97 41      [17]   46     call cpct_isKeyPressed_asm
-   40D1 20 04         [12]   47     jr nz, _notPressed_A
+   40CE CD 98 41      [17]   46     call cpct_isKeyPressed_asm
+   40D1 28 04         [12]   47     jr z, _notPressed_A
    40D3                      48 _pressed_A:
    40D3 DD 36 05 01   [19]   49     ld 5(ix), #1
    40D7                      50 _notPressed_A:
                              51 
+   40D7 C9            [10]   52     ret
+                             53 

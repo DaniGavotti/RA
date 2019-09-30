@@ -2512,14 +2512,14 @@ Hexadecimal [16-Bits]
                               4 .area _DATA
                               5 .area _CODE
                               6 
-   405F 14 14 02 08 01 01     7 player: .db 20, 20, 2, 8, 1, 1, 0x0F, 0xC000
+   405F 14 14 02 08 00 00     7 player: .db 20, 20, 2, 8, 0, 0, 0x0F, 0xC000
         0F 00
    4067 28 28 04 08 FF 02     8 enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
         FF 00
                               9 
    406F                      10 _main::
                              11    ;; Disable firmware to prevent it from interfering with string drawing
-   406F CD B5 41      [17]   12    call cpct_disableFirmware_asm
+   406F CD B6 41      [17]   12    call cpct_disableFirmware_asm
                              13 
    4072 21 5F 40      [10]   14    ld hl, #player
    4075 CD 27 40      [17]   15    call entityman_create
@@ -2529,7 +2529,7 @@ Hexadecimal [16-Bits]
                              19 
    407E                      20 loop:
                              21 
-   407E CD AD 41      [17]   22    call cpct_waitVSYNC_asm
+   407E CD AE 41      [17]   22    call cpct_waitVSYNC_asm
                              23 
    4081 CD 1E 40      [17]   24    call entityman_getEntityArray_IX
    4084 CD 9C 40      [17]   25    call inputsys_update
@@ -2540,7 +2540,7 @@ Hexadecimal [16-Bits]
                              30 
    4090 CD 1E 40      [17]   31    call entityman_getEntityArray_IX
    4093 CD 23 40      [17]   32    call entityman_getNumEntities_A
-   4096 CD F1 40      [17]   33    call rendersys_update
+   4096 CD F2 40      [17]   33    call rendersys_update
                              34 
    4099 18 E3         [12]   35    jr loop
                              36 

@@ -13,7 +13,7 @@ S cpct_disableFirmware_asm Ref0000
 A _CODE size 3C flags 0 addr 0
 S _main Def0010
 A _DATA size 0 flags 0 addr 0
-T 00 00 14 14 02 08 01 01 0F 00 28 28 04 08 FF 02
+T 00 00 14 14 02 08 00 00 0F 00 28 28 04 08 FF 02
 R 00 00 00 00
 T 0E 00 FF 00
 R 00 00 00 00

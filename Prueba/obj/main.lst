@@ -2512,7 +2512,7 @@ Hexadecimal [16-Bits]
                               4 .area _DATA
                               5 .area _CODE
                               6 
-   0000 14 14 02 08 01 01     7 player: .db 20, 20, 2, 8, 1, 1, 0x0F, 0xC000
+   0000 14 14 02 08 00 00     7 player: .db 20, 20, 2, 8, 0, 0, 0x0F, 0xC000
         0F 00
    0008 28 28 04 08 FF 02     8 enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
         FF 00

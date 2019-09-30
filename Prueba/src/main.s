@@ -4,7 +4,7 @@
 .area _DATA
 .area _CODE
 
-player: .db 20, 20, 2, 8, 1, 1, 0x0F, 0xC000
+player: .db 20, 20, 2, 8, 0, 0, 0x0F, 0xC000
 enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
 
 _main::

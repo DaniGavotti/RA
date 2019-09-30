@@ -20,7 +20,7 @@ inputsys_update::
     ;;If O pressed
     ld hl, #Key_O
     call cpct_isKeyPressed_asm
-    jr nz, _notPressed_O
+    jr z, _notPressed_O
 _pressed_O:
     ld 4(ix), #-1
 _notPressed_O:
@@ -28,7 +28,7 @@ _notPressed_O:
     ;;If P pressed
     ld hl, #Key_P
     call cpct_isKeyPressed_asm
-    jr nz, _notPressed_P
+    jr z, _notPressed_P
 _pressed_P:
     ld 4(ix), #1
 _notPressed_P:
@@ -36,16 +36,18 @@ _notPressed_P:
     ;;If Q pressed
     ld hl, #Key_Q
     call cpct_isKeyPressed_asm
-    jr nz, _notPressed_Q
+    jr z, _notPressed_Q
 _pressed_Q:
-    ld 5(ix), #-1
+    ld 5(ix), #-4
 _notPressed_Q:
 
     ;;If A pressed
     ld hl, #Key_A
     call cpct_isKeyPressed_asm
-    jr nz, _notPressed_A
+    jr z, _notPressed_A
 _pressed_A:
-    ld 5(ix), #1
+    ld 5(ix), #4
 _notPressed_A:
+
+    ret
 
