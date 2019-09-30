@@ -3,7 +3,6 @@
 ;;
 
 .include "cpctelera.h.s"
-.include "cpct_functions.h.s"
 
 ;;System that will read the keys the user is presing and modify the player's character attributes acordingly
 
@@ -16,7 +15,7 @@ inputsys_update::
     ld 5(ix), #0 ;;y_speed
 
     ;;Scan Keys
-    call cpct_scanKeyBoar_f_asm
+    call cpct_scanKeyboard_f_asm
 
     ;;If O pressed
     ld hl, #Key_O

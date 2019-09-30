@@ -1,0 +1,91 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           cpct_video
+     00000000  l__DATA                         
+     00000003  max_entities                       
+     00000009  entity_size                        
+     0000028E  l__CODE                         
+     00004000  s__CODE                         
+     0000428E  s__DATA                         
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00004000    0000028E =         654. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00004000  _num_entities                      
+     00004001  _last_elem_ptr                     
+     00004003  _entity_array                      
+     0000401E  entityman_getEntityArray_IX        
+     00004023  entityman_getNumEntities_A         
+     00004027  entityman_create                   
+     00004042  phy_update                         
+     0000406F  _main                              cpct_keyboard
+     0000409B  inputsys_init                      cpct_keyboard
+     0000409C  inputsys_update                    cpct_keyboard
+     000040D7  rendersys_init                     
+     000040F1  rendersys_update                   
+     0000412D  _cpct_scanKeyboard_f               cpct_keyboard
+     0000412D  cpct_scanKeyboard_f_asm            cpct_keyboard
+     00004197  _cpct_isKeyPressed                 cpct_keyboard
+     00004197  cpct_isKeyPressed_asm              cpct_keyboard
+     000041A3  _cpct_keyboardStatusBuffer         cpct_keyboard
+     000041AD  _cpct_waitVSYNC                    cpct_video
+     000041AD  cpct_waitVSYNC_asm                 cpct_video
+     000041B5  _cpct_disableFirmware              cpct_firmware
+     000041B5  _cpct_removeInterruptHandler       cpct_firmware
+     000041B5  cpct_disableFirmware_asm           cpct_firmware
+     000041B5  cpct_removeInterruptHandler_asm    cpct_firmware
+     000041C5  cpct_drawSolidBox_asm              cpct_sprites
+     00004271  _cpct_mode_rom_status              cpct_firmware
+     00004272  cpct_getScreenPtr_asm              cpct_video
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+
+Files Linked                              [ module(s) ]
+
+obj/entity_manager.rel                    [  ]
+obj/physics_system.rel                    [  ]
+obj/main.rel                              [ cpct_keyboard ]
+obj/input_system.rel                      [ cpct_keyboard ]
+obj/render_system.rel                     [  ]
+
+
+Libraries Linked                          [ object file ]
+
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_scanKeyboard_f.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_isKeyPressed.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ keyboard.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_waitVSYNC.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_removeInterruptHandler.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_drawSolidBox_asmbindings.re ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpc_mode_rom_status.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_getScreenPtr_asmbindings.re ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+
+User Base Address Definitions
+
+_CODE = 0x4000
+_DATA = 0x0000
+
+
