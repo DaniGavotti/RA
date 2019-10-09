@@ -2507,40 +2507,109 @@ Hexadecimal [16-Bits]
 
 
 
-                              2 
-                              3 
-                              4 .area _DATA
-                              5 .area _CODE
-                              6 
-   405F 14 14 02 08 00 00     7 player: .db 20, 20, 2, 8, 0, 0, 0x0F, 0xC000
-        0F 00
-   4067 28 28 04 08 FF 02     8 enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
-        FF 00
-                              9 
-   406F                      10 _main::
-                             11    ;; Disable firmware to prevent it from interfering with string drawing
-   406F CD B6 41      [17]   12    call cpct_disableFirmware_asm
-                             13 
-   4072 21 5F 40      [10]   14    ld hl, #player
-   4075 CD 27 40      [17]   15    call entityman_create
-                             16 
-   4078 21 67 40      [10]   17    ld hl, #enemy
-   407B CD 27 40      [17]   18    call entityman_create
-                             19 
-   407E                      20 loop:
-                             21 
-   407E CD AE 41      [17]   22    call cpct_waitVSYNC_asm
-                             23 
-   4081 CD 1E 40      [17]   24    call entityman_getEntityArray_IX
-   4084 CD 9C 40      [17]   25    call inputsys_update
+                              2 .include "entity_manager.h.s"
+                              1 
+                              2 .macro DefineEntity _name, _x, _y, _h, _w, _vx, _vy , _sprite, _lastPosPtr, _state
+                              3     _name:
+                              4         .db _x
+                              5         .db _y
+                              6         .db _h
+                              7         .db _w
+                              8         .db _vx
+                              9         .db _vy
+                             10         .db _sprite
+                             11         .dw _lastPosPtr
+                             12         .db _state
+                             13 .endm
+                             14 
+                     0000    15 e_x=0
+                     0001    16 e_y=1
+                     0002    17 e_h=2
+                     0003    18 e_w=3
+                     0004    19 e_vx=4
+                     0005    20 e_vy=5
+                     0006    21 e_sprite=6
+                     0007    22 e_lp_l = 7
+                     0008    23 e_lp_h = 8
+                     0009    24 e_state = 9
+                     000A    25 sizeof_e= 10
                              26 
-   4087 CD 1E 40      [17]   27    call entityman_getEntityArray_IX
-   408A CD 23 40      [17]   28    call entityman_getNumEntities_A
-   408D CD 42 40      [17]   29    call phy_update
+                             27 .macro DefineEntityDefault _name, _n
+                             28     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
+                             29 .endm
                              30 
-   4090 CD 1E 40      [17]   31    call entityman_getEntityArray_IX
-   4093 CD 23 40      [17]   32    call entityman_getNumEntities_A
-   4096 CD F2 40      [17]   33    call rendersys_update
+                             31 .macro DefineEntityArray _name, _N
+                             32     _c = 0
+                             33     .rept _N
+                             34         DefineEntityDefault _name, \_c
+                             35         _c= _c + 1
+                             36     .endm
+                             37 .endm
+                             38 
+                             39 .globl man_entity_getArray
+                             40 .globl man_entity_create
+                             41 .globl entity_size
+                             42 .globl man_entity_init
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 50.
+Hexadecimal [16-Bits]
+
+
+
+                              3 .include "physics_system.h.s"
+                              1 ;;
+                              2 ;;Physics.h.s
+                              3 ;;
+                              4 
+                     0050     5 screen_width == 80	; Ancho
+                     00C8     6 screen_heigth == 200	 ; Alto
+                     0001     7 gravity == 1
+                              8 
+                              9 .globl phy_update
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 51.
+Hexadecimal [16-Bits]
+
+
+
+                              4 
+                              5 
+                              6 .area _DATA
+                              7 .area _CODE
+                              8 
+   404C                       9 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
+   0000                       1     player:
+   404C 14                    2         .db 20
+   404D 14                    3         .db 20
+   404E 20                    4         .db 32
+   404F 04                    5         .db 4
+   4050 00                    6         .db 0
+   4051 00                    7         .db 0
+   4052 0F                    8         .db 0x0F
+   4053 00 C0                 9         .dw 0xC000
+   4055 00                   10         .db 0
+                             10 ;;enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
+                             11 
+   4056                      12 _main::
+                             13    ;; Disable firmware to prevent it from interfering with string drawing
+   4056 CD F7 42      [17]   14    call cpct_disableFirmware_asm
+                             15 
+   4059 21 4C 40      [10]   16    ld hl, #player
+   405C CD BB 40      [17]   17    call man_entity_create
+                             18 
+                             19    ;;ld hl, #enemy
+                             20    ;;call entityman_create
+                             21 
+   405F                      22 loop:
+                             23 
+   405F CD EF 42      [17]   24    call cpct_waitVSYNC_asm
+                             25 
+   4062 CD 97 40      [17]   26    call man_entity_getArray
+   4065 CD 3C 41      [17]   27    call inputsys_update
+                             28 
+   4068 CD 97 40      [17]   29    call man_entity_getArray
+   406B CD 00 40      [17]   30    call phy_update
+                             31 
+   406E CD 97 40      [17]   32    call man_entity_getArray
+   4071 CD F2 40      [17]   33    call rendersys_update
                              34 
-   4099 18 E3         [12]   35    jr loop
+   4074 18 E9         [12]   35    jr loop
                              36 

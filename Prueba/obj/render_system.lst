@@ -7,66 +7,159 @@ Hexadecimal [16-Bits]
                               2 ;;RENDER SYSTEM
                               3 ;;
                               4 
-                     C000     5 screen_start = 0xC000
-                     0000     6 backgroun_color = 0x00
-                              7 
-                              8 ;;Initializes the render system by storing a pointer to the first element of the entity array
-   0000                       9 rendersys_init::
-   0000 F5            [11]   10     push af
-                             11 
-   0001 11 00 C0      [10]   12     ld de, #screen_start
-   0004 DD 46 01      [19]   13     ld  b, 1(ix)    ;;y
-   0007 DD 4E 00      [19]   14     ld  c, 0(ix)    ;;x
-   000A CD 00 00      [17]   15     call cpct_getScreenPtr_asm
-                             16 
-   000D DD 74 08      [19]   17     ld 8(ix), h
-   0010 DD 75 07      [19]   18     ld 7(ix), l
-                             19 
-   0013 01 00 00      [10]   20     ld bc, #entity_size
-   0016 DD 09         [15]   21     add ix, bc
-   0018 18 00         [12]   22     jr _renloop
-                             23 
-                             24 ;;INPUT
-                             25 ;;  IX: Pointer to first entity
-                             26 ;;   A: number of entities to render
-   001A                      27 rendersys_update::
-                             28 
-   001A                      29 _renloop:
-   001A F5            [11]   30     push af
-                             31 
-                             32     ;; Erase the las sprite position
-   001B DD 66 08      [19]   33     ld h, 8(ix)
-   001E DD 6E 07      [19]   34     ld l, 7(ix)
-   0021 EB            [ 4]   35     ex de, hl
-   0022 3E 00         [ 7]   36     ld  a, #backgroun_color
-   0024 DD 46 03      [19]   37     ld  b, 3(ix)    ;;w
-   0027 DD 4E 02      [19]   38     ld  c, 2(ix)    ;;H
-   002A CD 00 00      [17]   39     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
-                             40 
-                             41 
-                             42     ;; Draw the new sprite and store the new position
-   002D 11 00 C0      [10]   43     ld de, #screen_start
-   0030 DD 46 01      [19]   44     ld  b, 1(ix)    ;;y
-   0033 DD 4E 00      [19]   45     ld  c, 0(ix)    ;;x
-   0036 CD 00 00      [17]   46     call cpct_getScreenPtr_asm
-   0039 DD 74 08      [19]   47     ld 8(ix), h
-   003C DD 75 07      [19]   48     ld 7(ix), l
-   003F EB            [ 4]   49     ex de, hl
-   0040 DD 7E 06      [19]   50     ld  a, 6(ix)
-   0043 DD 46 03      [19]   51     ld  b, 3(ix)    ;;w
-   0046 DD 4E 02      [19]   52     ld  c, 2(ix)    ;;H
-   0049 CD 00 00      [17]   53     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
-                             54 
-   004C F1            [10]   55     pop af
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 
 
-                             56 
-   004D 3D            [ 4]   57     dec a
-   004E C8            [11]   58     ret z
-                             59 
-   004F 01 00 00      [10]   60     ld bc, #entity_size
-   0052 DD 09         [15]   61     add ix, bc
-   0054 18 C4         [12]   62     jr _renloop
+                              5 .include "entity_manager.h.s"
+                              1 
+                              2 .macro DefineEntity _name, _x, _y, _h, _w, _vx, _vy , _sprite, _lastPosPtr, _state
+                              3     _name:
+                              4         .db _x
+                              5         .db _y
+                              6         .db _h
+                              7         .db _w
+                              8         .db _vx
+                              9         .db _vy
+                             10         .db _sprite
+                             11         .dw _lastPosPtr
+                             12         .db _state
+                             13 .endm
+                             14 
+                     0000    15 e_x=0
+                     0001    16 e_y=1
+                     0002    17 e_h=2
+                     0003    18 e_w=3
+                     0004    19 e_vx=4
+                     0005    20 e_vy=5
+                     0006    21 e_sprite=6
+                     0007    22 e_lp_l = 7
+                     0008    23 e_lp_h = 8
+                     0009    24 e_state = 9
+                     000A    25 sizeof_e= 10
+                             26 
+                             27 .macro DefineEntityDefault _name, _n
+                             28     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
+                             29 .endm
+                             30 
+                             31 .macro DefineEntityArray _name, _N
+                             32     _c = 0
+                             33     .rept _N
+                             34         DefineEntityDefault _name, \_c
+                             35         _c= _c + 1
+                             36     .endm
+                             37 .endm
+                             38 
+                             39 .globl man_entity_getArray
+                             40 .globl man_entity_create
+                             41 .globl entity_size
+                             42 .globl man_entity_init
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
+Hexadecimal [16-Bits]
+
+
+
+                              6 .include "render_system.h.s"
+                              1 ;;
+                              2 ;;Render System .h
+                              3 ;;
+                              4 
+                              5 .globl rendersys_Wipe
+                              6 .globl rendersys_init
+                              7 .globl rendersys_update
+                              8 .globl cpct_getScreenPtr_asm
+                              9 .globl cpct_drawSolidBox_asm
+                             10 .globl cpct_zx7b_decrunch_s_asm
+                             11 .globl cpct_drawSprite_asm
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 4.
+Hexadecimal [16-Bits]
+
+
+
+                              7 
+                              8 
+                              9 
+                     C000    10 screen_start = 0xC000
+                     0000    11 backgroun_color = 0x00
+                             12 
+                             13 
+   0000                      14 rendersys_Wipe::
+                             15     ;; Erase the las sprite position
+   0000 26 C0         [ 7]   16     ld h, #0xC0
+   0002 2E 00         [ 7]   17     ld l, #0x00
+   0004 EB            [ 4]   18     ex de, hl
+   0005 3E 00         [ 7]   19     ld  a, #backgroun_color
+   0007 06 50         [ 7]   20     ld  b, #80    ;;w
+   0009 0E 19         [ 7]   21     ld  c, #25    ;;H
+   000B CD 00 00      [17]   22     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+                             23 
+                             24 
+                             25 ;;Initializes the render system by storing a pointer to the first element of the entity array
+   000E                      26 rendersys_init::
+   000E F5            [11]   27     push af
+                             28 
+   000F 11 00 C0      [10]   29     ld de, #screen_start
+   0012 DD 46 01      [19]   30     ld  b, e_y(ix)    ;;y
+   0015 DD 4E 00      [19]   31     ld  c, e_x(ix)    ;;x
+   0018 CD 00 00      [17]   32     call cpct_getScreenPtr_asm
+                             33 
+   001B DD 74 08      [19]   34     ld e_lp_h(ix), h
+   001E DD 75 07      [19]   35     ld e_lp_l(ix), l
+                             36 
+   0021 F1            [10]   37     pop af
+   0022 3D            [ 4]   38     dec a
+   0023 C8            [11]   39     ret z
+                             40 
+   0024 01 00 00      [10]   41     ld bc, #entity_size
+   0027 DD 09         [15]   42     add ix, bc
+                             43 
+   0029 18 E3         [12]   44     jr rendersys_init
+                             45 
+                             46 ;;INPUT
+                             47 ;;  IX: Pointer to first entity
+                             48 ;;   A: number of entities to render
+   002B                      49 rendersys_update::
+                             50 
+   002B                      51 _renloop:
+   002B F5            [11]   52     push af
+                             53 
+                             54     ;; Erase the las sprite position
+   002C DD 66 08      [19]   55     ld h, e_lp_h(ix)
+   002F DD 6E 07      [19]   56     ld l, e_lp_l(ix)
+   0032 EB            [ 4]   57     ex de, hl
+   0033 3E 00         [ 7]   58     ld  a, #backgroun_color
+   0035 DD 46 02      [19]   59     ld  b, e_h(ix)    ;;w
+   0038 DD 4E 03      [19]   60     ld  c, e_w(ix)    ;;H
+   003B CD 00 00      [17]   61     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 5.
+Hexadecimal [16-Bits]
+
+
+
+                             62 
+                             63 
+                             64     ;; Draw the new sprite and store the new position
+   003E 11 00 C0      [10]   65     ld de, #screen_start
+   0041 DD 46 01      [19]   66     ld  b, e_y(ix)    ;;y
+   0044 DD 4E 00      [19]   67     ld  c, e_x(ix)    ;;x
+   0047 CD 00 00      [17]   68     call cpct_getScreenPtr_asm
+   004A DD 74 08      [19]   69     ld e_lp_h(ix), h
+   004D DD 75 07      [19]   70     ld e_lp_l(ix), l
+   0050 EB            [ 4]   71     ex de, hl
+                             72     ;;ld  h, e_sprite(ix)
+                             73     ;;ld  l, e_sprite_l(ix)
+   0051 DD 7E 06      [19]   74     ld a, e_sprite(ix)
+   0054 DD 46 02      [19]   75     ld  b, e_h(ix)    ;;w
+   0057 DD 4E 03      [19]   76     ld  c, e_w(ix)    ;;H
+   005A CD 00 00      [17]   77     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+                             78 
+                             79 
+   005D F1            [10]   80     pop af
+                             81 
+   005E 3D            [ 4]   82     dec a
+   005F C8            [11]   83     ret z
+                             84 
+   0060 01 00 00      [10]   85     ld bc, #entity_size
+   0063 DD 09         [15]   86     add ix, bc
+   0065 18 C4         [12]   87     jr _renloop

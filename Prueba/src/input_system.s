@@ -3,16 +3,35 @@
 ;;
 
 .include "cpctelera.h.s"
-
+.include "entity_manager.h.s"
 ;;System that will read the keys the user is presing and modify the player's character attributes acordingly
+
+.globl cpct_scanKeyboard_f_asm
+.globl cpct_isKeyPressed_asm
+.globl cpct_isAnyKeyPressed_f_asm
 
 inputsys_init::
     ret
 
+inputsys_waitForInput::
+    ;;Scan Keys
+    call cpct_scanKeyboard_f_asm
+
+    ;;If any key pressed
+    call cpct_isAnyKeyPressed_f_asm
+    ld a, #0
+    jr z, _notPressed
+_pressed:
+    ld a, #1
+    ;;Devuelve algo enun registro
+_notPressed:
+    ret
+
+
 inputsys_update::
     ;;reset velocity
-    ld 4(ix), #0 ;;x_speed
-    ld 5(ix), #0 ;;y_speed
+    ld e_vx(ix), #0 ;;x_speed
+    ;;ld e_vy(ix), #0 ;;y_speed
 
     ;;Scan Keys
     call cpct_scanKeyboard_f_asm
@@ -22,7 +41,7 @@ inputsys_update::
     call cpct_isKeyPressed_asm
     jr z, _notPressed_O
 _pressed_O:
-    ld 4(ix), #-1
+    ld e_vx(ix), #-1
 _notPressed_O:
 
     ;;If P pressed
@@ -30,7 +49,7 @@ _notPressed_O:
     call cpct_isKeyPressed_asm
     jr z, _notPressed_P
 _pressed_P:
-    ld 4(ix), #1
+    ld e_vx(ix), #1
 _notPressed_P:
 
     ;;If Q pressed
@@ -38,7 +57,7 @@ _notPressed_P:
     call cpct_isKeyPressed_asm
     jr z, _notPressed_Q
 _pressed_Q:
-    ld 5(ix), #-4
+    ld e_vy(ix), #-8
 _notPressed_Q:
 
     ;;If A pressed
@@ -46,7 +65,7 @@ _notPressed_Q:
     call cpct_isKeyPressed_asm
     jr z, _notPressed_A
 _pressed_A:
-    ld 5(ix), #4
+    ld e_vy(ix), #4
 _notPressed_A:
 
     ret

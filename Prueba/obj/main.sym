@@ -54,24 +54,29 @@ Symbol Table
     Key_U   =  0405     |     Key_V   =  8006     |     Key_W   =  0807 
     Key_X   =  8007     |     Key_Y   =  0805     |     Key_Z   =  8008 
     PAL_INKR=  0040     |     PAL_PENR=  0000     |     PPI_PORT=  00F5 
-  0 _main      0010 GR  |     cpct_dis   **** GX  |     cpct_pag=  0000 
+  0 _main      000A GR  |     cpct_dis   **** GX  |     cpct_pag=  0000 
     cpct_pag=  0010     |     cpct_pag=  0020     |     cpct_pag=  0030 
-    cpct_wai   **** GX  |   0 enemy      0008 R   |     entityma   **** GX
-    entityma   **** GX  |     entityma   **** GX  |     inputsys   **** GX
+    cpct_wai   **** GX  |     e_h     =  0002     |     e_lp_h  =  0008 
+    e_lp_l  =  0007     |     e_sprite=  0006     |     e_state =  0009 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Symbol Table
 
-  0 loop       001F R   |     opc_DI  =  00F3     |     opc_EI  =  00FB 
-    opc_JR  =  0018     |     opc_LD_D=  0016     |     phy_upda   **** GX
-  0 player     0000 R   |     rendersy   **** GX
+    e_vx    =  0004     |     e_vy    =  0005     |     e_w     =  0003 
+    e_x     =  0000     |     e_y     =  0001     |     entity_s   **** GX
+    gravity =  0001 G   |     inputsys   **** GX  |   0 loop       0013 R
+    man_enti   **** GX  |     man_enti   **** GX  |     man_enti   **** GX
+    opc_DI  =  00F3     |     opc_EI  =  00FB     |     opc_JR  =  0018 
+    opc_LD_D=  0016     |     phy_upda   **** GX  |   0 player     0000 R
+    rendersy   **** GX  |     screen_h=  00C8 G   |     screen_w=  0050 G
+    sizeof_e=  000A 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE      size   3C   flags    0
+   0 _CODE      size   2A   flags    0
    1 _DATA      size    0   flags    0
 

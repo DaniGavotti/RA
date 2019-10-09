@@ -2516,51 +2516,122 @@ Hexadecimal [16-Bits]
 
 
 
-                              6 
+                              6 .include "entity_manager.h.s"
+                              1 
+                              2 .macro DefineEntity _name, _x, _y, _h, _w, _vx, _vy , _sprite, _lastPosPtr, _state
+                              3     _name:
+                              4         .db _x
+                              5         .db _y
+                              6         .db _h
+                              7         .db _w
+                              8         .db _vx
+                              9         .db _vy
+                             10         .db _sprite
+                             11         .dw _lastPosPtr
+                             12         .db _state
+                             13 .endm
+                             14 
+                     0000    15 e_x=0
+                     0001    16 e_y=1
+                     0002    17 e_h=2
+                     0003    18 e_w=3
+                     0004    19 e_vx=4
+                     0005    20 e_vy=5
+                     0006    21 e_sprite=6
+                     0007    22 e_lp_l = 7
+                     0008    23 e_lp_h = 8
+                     0009    24 e_state = 9
+                     000A    25 sizeof_e= 10
+                             26 
+                             27 .macro DefineEntityDefault _name, _n
+                             28     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
+                             29 .endm
+                             30 
+                             31 .macro DefineEntityArray _name, _N
+                             32     _c = 0
+                             33     .rept _N
+                             34         DefineEntityDefault _name, \_c
+                             35         _c= _c + 1
+                             36     .endm
+                             37 .endm
+                             38 
+                             39 .globl man_entity_getArray
+                             40 .globl man_entity_create
+                             41 .globl entity_size
+                             42 .globl man_entity_init
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 51.
+Hexadecimal [16-Bits]
+
+
+
                               7 ;;System that will read the keys the user is presing and modify the player's character attributes acordingly
                               8 
-   0000                       9 inputsys_init::
-   0000 C9            [10]   10     ret
-                             11 
-   0001                      12 inputsys_update::
-                             13     ;;reset velocity
-   0001 DD 36 04 00   [19]   14     ld 4(ix), #0 ;;x_speed
-   0005 DD 36 05 00   [19]   15     ld 5(ix), #0 ;;y_speed
-                             16 
+                              9 .globl cpct_scanKeyboard_f_asm
+                             10 .globl cpct_isKeyPressed_asm
+                             11 .globl cpct_isAnyKeyPressed_f_asm
+                             12 
+   0000                      13 inputsys_init::
+   0000 C9            [10]   14     ret
+                             15 
+   0001                      16 inputsys_waitForInput::
                              17     ;;Scan Keys
-   0009 CD 00 00      [17]   18     call cpct_scanKeyboard_f_asm
+   0001 CD 00 00      [17]   18     call cpct_scanKeyboard_f_asm
                              19 
-                             20     ;;If O pressed
-   000C 21 04 04      [10]   21     ld hl, #Key_O
-   000F CD 00 00      [17]   22     call cpct_isKeyPressed_asm
-   0012 28 04         [12]   23     jr z, _notPressed_O
-   0014                      24 _pressed_O:
-   0014 DD 36 04 FF   [19]   25     ld 4(ix), #-1
-   0018                      26 _notPressed_O:
-                             27 
-                             28     ;;If P pressed
-   0018 21 03 08      [10]   29     ld hl, #Key_P
-   001B CD 00 00      [17]   30     call cpct_isKeyPressed_asm
-   001E 28 04         [12]   31     jr z, _notPressed_P
-   0020                      32 _pressed_P:
-   0020 DD 36 04 01   [19]   33     ld 4(ix), #1
-   0024                      34 _notPressed_P:
+                             20     ;;If any key pressed
+   0004 CD 00 00      [17]   21     call cpct_isAnyKeyPressed_f_asm
+   0007 3E 00         [ 7]   22     ld a, #0
+   0009 28 02         [12]   23     jr z, _notPressed
+   000B                      24 _pressed:
+   000B 3E 01         [ 7]   25     ld a, #1
+                             26     ;;Devuelve algo enun registro
+   000D                      27 _notPressed:
+   000D C9            [10]   28     ret
+                             29 
+                             30 
+   000E                      31 inputsys_update::
+                             32     ;;reset velocity
+   000E DD 36 04 00   [19]   33     ld e_vx(ix), #0 ;;x_speed
+                             34     ;;ld e_vy(ix), #0 ;;y_speed
                              35 
-                             36     ;;If Q pressed
-   0024 21 08 08      [10]   37     ld hl, #Key_Q
-   0027 CD 00 00      [17]   38     call cpct_isKeyPressed_asm
-   002A 28 04         [12]   39     jr z, _notPressed_Q
-   002C                      40 _pressed_Q:
-   002C DD 36 05 FF   [19]   41     ld 5(ix), #-1
-   0030                      42 _notPressed_Q:
-                             43 
-                             44     ;;If A pressed
-   0030 21 08 20      [10]   45     ld hl, #Key_A
-   0033 CD 00 00      [17]   46     call cpct_isKeyPressed_asm
-   0036 28 04         [12]   47     jr z, _notPressed_A
-   0038                      48 _pressed_A:
-   0038 DD 36 05 01   [19]   49     ld 5(ix), #1
-   003C                      50 _notPressed_A:
-                             51 
-   003C C9            [10]   52     ret
-                             53 
+                             36     ;;Scan Keys
+   0012 CD 00 00      [17]   37     call cpct_scanKeyboard_f_asm
+                             38 
+                             39     ;;If O pressed
+   0015 21 04 04      [10]   40     ld hl, #Key_O
+   0018 CD 00 00      [17]   41     call cpct_isKeyPressed_asm
+   001B 28 04         [12]   42     jr z, _notPressed_O
+   001D                      43 _pressed_O:
+   001D DD 36 04 FF   [19]   44     ld e_vx(ix), #-1
+   0021                      45 _notPressed_O:
+                             46 
+                             47     ;;If P pressed
+   0021 21 03 08      [10]   48     ld hl, #Key_P
+   0024 CD 00 00      [17]   49     call cpct_isKeyPressed_asm
+   0027 28 04         [12]   50     jr z, _notPressed_P
+   0029                      51 _pressed_P:
+   0029 DD 36 04 01   [19]   52     ld e_vx(ix), #1
+   002D                      53 _notPressed_P:
+                             54 
+                             55     ;;If Q pressed
+   002D 21 08 08      [10]   56     ld hl, #Key_Q
+   0030 CD 00 00      [17]   57     call cpct_isKeyPressed_asm
+   0033 28 04         [12]   58     jr z, _notPressed_Q
+   0035                      59 _pressed_Q:
+   0035 DD 36 05 F8   [19]   60     ld e_vy(ix), #-8
+   0039                      61 _notPressed_Q:
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
+Hexadecimal [16-Bits]
+
+
+
+                             62 
+                             63     ;;If A pressed
+   0039 21 08 20      [10]   64     ld hl, #Key_A
+   003C CD 00 00      [17]   65     call cpct_isKeyPressed_asm
+   003F 28 04         [12]   66     jr z, _notPressed_A
+   0041                      67 _pressed_A:
+   0041 DD 36 05 04   [19]   68     ld e_vy(ix), #4
+   0045                      69 _notPressed_A:
+                             70 
+   0045 C9            [10]   71     ret
+                             72 

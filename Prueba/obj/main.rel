@@ -1,33 +1,35 @@
 XL2
-H 2 areas A global symbols
+H 2 areas E global symbols
 M cpct_keyboard
 S rendersys_update Ref0000
-S entityman_getNumEntities_A Ref0000
+S gravity Def0001
+S man_entity_init Ref0000
+S man_entity_create Ref0000
+S man_entity_getArray Ref0000
+S screen_heigth Def00C8
 S .__.ABS. Def0000
-S entityman_create Ref0000
 S inputsys_update Ref0000
 S cpct_waitVSYNC_asm Ref0000
 S phy_update Ref0000
-S entityman_getEntityArray_IX Ref0000
+S entity_size Ref0000
 S cpct_disableFirmware_asm Ref0000
-A _CODE size 3C flags 0 addr 0
-S _main Def0010
+S screen_width Def0050
+A _CODE size 2A flags 0 addr 0
+S _main Def000A
 A _DATA size 0 flags 0 addr 0
-T 00 00 14 14 02 08 00 00 0F 00 28 28 04 08 FF 02
+T 00 00
 R 00 00 00 00
-T 0E 00 FF 00
+T 00 00 14 14 20 04 00 00 0F 00 C0 00
 R 00 00 00 00
-T 10 00
+T 0A 00
 R 00 00 00 00
-T 10 00 CD 00 00 21 00 00 CD 00 00 21
-R 00 00 00 00 02 03 08 00 00 06 00 00 02 09 03 00
-T 1A 00 08 00 CD 00 00
-R 00 00 00 00 00 02 00 00 02 05 03 00
-T 1F 00
+T 0A 00 CD 00 00 21 00 00 CD 00 00
+R 00 00 00 00 02 03 0B 00 00 06 00 00 02 09 03 00
+T 13 00
 R 00 00 00 00
-T 1F 00 CD 00 00 CD 00 00 CD 00 00 CD
-R 00 00 00 00 02 03 05 00 02 06 07 00 02 09 04 00
-T 29 00 00 00 CD 00 00 CD 00 00 CD
-R 00 00 00 00 02 02 07 00 02 05 01 00 02 08 06 00
-T 32 00 00 00 CD 00 00 CD 00 00 18 E3
-R 00 00 00 00 02 02 07 00 02 05 01 00 02 08 00 00
+T 13 00 CD 00 00 CD 00 00 CD 00 00 CD
+R 00 00 00 00 02 03 08 00 02 06 04 00 02 09 07 00
+T 1D 00 00 00 CD 00 00 CD 00 00 CD
+R 00 00 00 00 02 02 04 00 02 05 09 00 02 08 04 00
+T 26 00 00 00 18 E9
+R 00 00 00 00 02 02 00 00

@@ -1,0 +1,8 @@
+XL2
+H 1 areas 5 global symbols
+S gravity Def0001
+S screen_heigth Def00C8
+S .__.ABS. Def0000
+S phy_update Ref0000
+S screen_width Def0050
+A _CODE size 0 flags 0 addr 0

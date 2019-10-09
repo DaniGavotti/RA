@@ -9,57 +9,64 @@ Area                                    Addr        Size        Decimal Bytes (A
       -----  --------------------------------   ------------------------
      00000000  .__.ABS.                           cpct_video
      00000000  l__DATA                         
-     00000003  max_entities                       
-     00000009  entity_size                        
-     0000028F  l__CODE                         
+     00000001  gravity                            
+     0000000B  entity_size                        cpct_keyboard
+     00000050  screen_width                       
+     000000C8  screen_heigth                      
+     000003D0  l__CODE                         
      00004000  s__CODE                         
-     0000428F  s__DATA                         
-
+     000043D0  s__DATA                         
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    0000028F =         655. bytes (REL,CON)
+_CODE                               00004000    000003D0 =         976. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004000  _num_entities                      
-     00004001  _last_elem_ptr                     
-     00004003  _entity_array                      
-     0000401E  entityman_getEntityArray_IX        
-     00004023  entityman_getNumEntities_A         
-     00004027  entityman_create                   
-     00004042  phy_update                         
-     0000406F  _main                              cpct_keyboard
-     0000409B  inputsys_init                      cpct_keyboard
-     0000409C  inputsys_update                    cpct_keyboard
-     000040D8  rendersys_init                     
+     00004000  phy_update                         
+     00004056  _main                              cpct_keyboard
+     00004097  man_entity_getArray                cpct_keyboard
+     0000409F  man_entity_init                    cpct_keyboard
+     000040AA  man_entity_new                     cpct_keyboard
+     000040BB  man_entity_create                  cpct_keyboard
+     000040C7  rendersys_Wipe                     
+     000040D5  rendersys_init                     
      000040F2  rendersys_update                   
-     0000412E  _cpct_scanKeyboard_f               cpct_keyboard
-     0000412E  cpct_scanKeyboard_f_asm            cpct_keyboard
-     00004198  _cpct_isKeyPressed                 cpct_keyboard
-     00004198  cpct_isKeyPressed_asm              cpct_keyboard
-     000041A4  _cpct_keyboardStatusBuffer         cpct_keyboard
-     000041AE  _cpct_waitVSYNC                    cpct_video
-     000041AE  cpct_waitVSYNC_asm                 cpct_video
-     000041B6  _cpct_disableFirmware              cpct_firmware
-     000041B6  _cpct_removeInterruptHandler       cpct_firmware
-     000041B6  cpct_disableFirmware_asm           cpct_firmware
-     000041B6  cpct_removeInterruptHandler_asm    cpct_firmware
-     000041C6  cpct_drawSolidBox_asm              cpct_sprites
-     00004272  _cpct_mode_rom_status              cpct_firmware
-     00004273  cpct_getScreenPtr_asm              cpct_video
-
+     0000412E  inputsys_init                      cpct_keyboard
+     0000412F  inputsys_waitForInput              cpct_keyboard
+     0000413C  inputsys_update                    cpct_keyboard
+     00004174  _cpct_scanKeyboard_f               cpct_keyboard
+     00004174  cpct_scanKeyboard_f_asm            cpct_keyboard
+     000041DE  _cpct_isKeyPressed                 cpct_keyboard
+     000041DE  cpct_isKeyPressed_asm              cpct_keyboard
+     000041EA  cpct_drawSprite_asm                cpct_sprites
+     0000428A  _cpct_keyboardStatusBuffer         cpct_keyboard
+     00004294  _cpct_isAnyKeyPressed_f            cpct_keyboard
+     00004294  cpct_isAnyKeyPressed_f_asm         cpct_keyboard
+     000042AF  cpct_zx7b_decrunch_s_asm           cpct_compression
+     000042EF  _cpct_waitVSYNC                    cpct_video
+     000042EF  cpct_waitVSYNC_asm                 cpct_video
+     000042F7  _cpct_disableFirmware              cpct_firmware
+     000042F7  _cpct_removeInterruptHandler       cpct_firmware
+     000042F7  cpct_disableFirmware_asm           cpct_firmware
+     000042F7  cpct_removeInterruptHandler_asm    cpct_firmware
+     00004307  cpct_drawSolidBox_asm              cpct_sprites
+     000043B3  _cpct_mode_rom_status              cpct_firmware
+     000043B4  cpct_getScreenPtr_asm              cpct_video
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 
 Files Linked                              [ module(s) ]
 
-obj/entity_manager.rel                    [  ]
+obj/entity_manager.h.rel                  [  ]
 obj/physics_system.rel                    [  ]
 obj/main.rel                              [ cpct_keyboard ]
-obj/input_system.rel                      [ cpct_keyboard ]
+obj/entity_manager.rel                    [ cpct_keyboard ]
 obj/render_system.rel                     [  ]
+obj/input_system.rel                      [ cpct_keyboard ]
+obj/physics_system.h.rel                  [  ]
+obj/render_system.h.rel                   [  ]
 
 
 Libraries Linked                          [ object file ]
@@ -69,7 +76,13 @@ Libraries Linked                          [ object file ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_isKeyPressed.rel ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_drawSprite_asmbindings.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
                                           [ keyboard.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_isAnyKeyPressed_f.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_zx7b_decrunch_s_asmbindings ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_waitVSYNC.rel ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib

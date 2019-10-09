@@ -7,10 +7,13 @@
 -k /home/daniel/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/share/sdcc/lib/z80
 -l /home/daniel/cpctelera/cpctelera/cpctelera.lib
 -l z80
-obj/entity_manager.rel
+obj/entity_manager.h.rel
 obj/physics_system.rel
 obj/main.rel
-obj/input_system.rel
+obj/entity_manager.rel
 obj/render_system.rel
+obj/input_system.rel
+obj/physics_system.h.rel
+obj/render_system.h.rel
 
 -e

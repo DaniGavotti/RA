@@ -7,30 +7,130 @@ Hexadecimal [16-Bits]
                               2 ;;PHYSICS SYSTEM
                               3 ;;
                               4 
-                              5 ;; Updates the position of entities by adding their speed to their position
-                              6 ;;  IX: Pointer to first entity
-                              7 ;;   A: number of entities to update
-                              8 
-   4042                       9 phy_update::
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
+Hexadecimal [16-Bits]
+
+
+
+                              5 .include "entity_manager.h.s"
+                              1 
+                              2 .macro DefineEntity _name, _x, _y, _h, _w, _vx, _vy , _sprite, _lastPosPtr, _state
+                              3     _name:
+                              4         .db _x
+                              5         .db _y
+                              6         .db _h
+                              7         .db _w
+                              8         .db _vx
+                              9         .db _vy
+                             10         .db _sprite
+                             11         .dw _lastPosPtr
+                             12         .db _state
+                             13 .endm
+                             14 
+                     0000    15 e_x=0
+                     0001    16 e_y=1
+                     0002    17 e_h=2
+                     0003    18 e_w=3
+                     0004    19 e_vx=4
+                     0005    20 e_vy=5
+                     0006    21 e_sprite=6
+                     0007    22 e_lp_l = 7
+                     0008    23 e_lp_h = 8
+                     0009    24 e_state = 9
+                     000A    25 sizeof_e= 10
+                             26 
+                             27 .macro DefineEntityDefault _name, _n
+                             28     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
+                             29 .endm
+                             30 
+                             31 .macro DefineEntityArray _name, _N
+                             32     _c = 0
+                             33     .rept _N
+                             34         DefineEntityDefault _name, \_c
+                             35         _c= _c + 1
+                             36     .endm
+                             37 .endm
+                             38 
+                             39 .globl man_entity_getArray
+                             40 .globl man_entity_create
+                             41 .globl entity_size
+                             42 .globl man_entity_init
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
+Hexadecimal [16-Bits]
+
+
+
+                              6 
+                              7 ;; Updates the position of entities by adding their speed to their position
+                              8 ;;  IX: Pointer to first entity
+                              9 ;;   A: number of entities to update
                              10 
-   4042                      11 _phyloop:
-   4042 F5            [11]   12     push af
-                             13 
-                             14     ;;Updates y
-   4043 DD 7E 01      [19]   15     ld  a, 1(ix)    ;;y
-   4046 DD 86 05      [19]   16     add 5(ix)
-   4049 DD 77 01      [19]   17     ld  1(ix), a
-                             18 
-                             19     ;;Updates x
-   404C DD 7E 00      [19]   20     ld  a, 0(ix)    ;;x
-   404F DD 86 04      [19]   21     add 4(ix)
-   4052 DD 77 00      [19]   22     ld  0(ix), a
-                             23 
-   4055 F1            [10]   24     pop af
+   4000                      11 phy_update::
+                             12 
+   4000                      13 _phyloop:
+   4000 F5            [11]   14     push af
+                             15 
+                             16     ;;Updates y
+   4001 3E C9         [ 7]   17     ld a, #screen_heigth + 1
+   4003 DD 96 02      [19]   18 	sub e_h(ix)
+   4006 4F            [ 4]   19 	ld c, a
+                             20 
+                             21     ;;Apply gravity
+   4007 DD 7E 05      [19]   22     ld a, e_vy(ix)
+   400A C6 01         [ 7]   23     add #gravity
+   400C DD 77 05      [19]   24     ld e_vy(ix), a
                              25 
-   4056 3D            [ 4]   26     dec a
-   4057 C8            [11]   27     ret z
-                             28 
-   4058 01 09 00      [10]   29     ld bc, #entity_size
-   405B DD 09         [15]   30     add ix, bc
-   405D 18 E3         [12]   31     jr _phyloop
+   400F DD 7E 01      [19]   26     ld  a, e_y(ix)    ;;y
+   4012 DD 86 05      [19]   27     add e_vy(ix)
+   4015 B9            [ 4]   28     cp c
+                             29 
+   4016 30 05         [12]   30     jr nc, _invalid_y
+                             31 
+   4018                      32 _valid_y:
+   4018 DD 77 01      [19]   33     ld  e_y(ix), a
+   401B 18 09         [12]   34     jr _endif_y
+                             35 
+   401D                      36 _invalid_y:
+   401D DD 7E 05      [19]   37     ld a, e_vy(ix)
+   4020 ED 44         [ 8]   38     neg
+   4022 DD 36 05 00   [19]   39     ld e_vy(ix), #0
+                             40 
+   4026                      41 _endif_y:
+                             42 
+                             43     ;;Updates x
+   4026 3E 51         [ 7]   44     ld a, #screen_width + 1
+   4028 DD 96 03      [19]   45 	sub e_w(ix)
+   402B 4F            [ 4]   46 	ld c, a
+                             47 
+                             48 
+   402C DD 7E 00      [19]   49     ld  a, e_x(ix)    ;;x
+   402F DD 86 04      [19]   50     add e_vx(ix)
+   4032 B9            [ 4]   51     cp c
+                             52 
+   4033 30 05         [12]   53     jr nc, _invalid_x
+                             54 
+   4035                      55 _valid_x:
+   4035 DD 77 00      [19]   56     ld  e_x(ix), a
+   4038 18 08         [12]   57     jr _endif_x
+                             58 
+   403A                      59 _invalid_x:
+   403A DD 7E 04      [19]   60     ld a, e_vx(ix)
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 4.
+Hexadecimal [16-Bits]
+
+
+
+   403D ED 44         [ 8]   61     neg
+   403F DD 77 04      [19]   62     ld e_vx(ix), a
+                             63 
+   4042                      64 _endif_x:
+                             65 
+                             66 
+   4042 F1            [10]   67     pop af
+                             68 
+   4043 3D            [ 4]   69     dec a
+   4044 C8            [11]   70     ret z
+                             71 
+   4045 01 0B 00      [10]   72     ld bc, #entity_size
+   4048 DD 09         [15]   73     add ix, bc
+   404A 18 B4         [12]   74     jr _phyloop

@@ -1,0 +1,11 @@
+XL2
+H 1 areas 8 global symbols
+S rendersys_update Ref0000
+S cpct_drawSprite_asm Ref0000
+S rendersys_Wipe Ref0000
+S .__.ABS. Def0000
+S cpct_zx7b_decrunch_s_asm Ref0000
+S rendersys_init Ref0000
+S cpct_drawSolidBox_asm Ref0000
+S cpct_getScreenPtr_asm Ref0000
+A _CODE size 0 flags 0 addr 0
