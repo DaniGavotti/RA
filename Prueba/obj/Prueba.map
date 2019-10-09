@@ -7,63 +7,78 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000000  .__.ABS.                           cpct_video
+     00000000  .__.ABS.                           
      00000000  l__DATA                         
+     00000000  string_Init                        
      00000001  gravity                            
+     00000001  string_Over                        
+     00000002  string_Erase                       
      0000000B  entity_size                        cpct_keyboard
      00000050  screen_width                       
      000000C8  screen_heigth                      
-     000003DD  l__CODE                         
+     0000050B  l__CODE                         
      00004000  s__CODE                         
-     000043DD  s__DATA                         
+     0000450B  s__DATA                         
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    000003DD =         989. bytes (REL,CON)
+_CODE                               00004000    0000050B =        1291. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00004000  phy_update                         
-     00004058  _main                              cpct_keyboard
-     00004099  man_entity_getArray                cpct_keyboard
-     000040A1  man_entity_init                    cpct_keyboard
-     000040AC  man_entity_new                     cpct_keyboard
-     000040BD  man_entity_create                  cpct_keyboard
-     000040C9  rendersys_Wipe                     
-     000040D7  rendersys_init                     
-     000040F4  rendersys_update                   
-     00004130  inputsys_init                      cpct_keyboard
-     00004131  inputsys_waitForInput              cpct_keyboard
-     0000413E  inputsys_update                    cpct_keyboard
-     00004181  _cpct_scanKeyboard_f               cpct_keyboard
-     00004181  cpct_scanKeyboard_f_asm            cpct_keyboard
-     000041EB  _cpct_isKeyPressed                 cpct_keyboard
-     000041EB  cpct_isKeyPressed_asm              cpct_keyboard
-     000041F7  cpct_drawSprite_asm                cpct_sprites
-     00004297  _cpct_keyboardStatusBuffer         cpct_keyboard
-     000042A1  _cpct_isAnyKeyPressed_f            cpct_keyboard
-     000042A1  cpct_isAnyKeyPressed_f_asm         cpct_keyboard
-     000042BC  cpct_zx7b_decrunch_s_asm           cpct_compression
-     000042FC  _cpct_waitVSYNC                    cpct_video
-     000042FC  cpct_waitVSYNC_asm                 cpct_video
-     00004304  _cpct_disableFirmware              cpct_firmware
-     00004304  _cpct_removeInterruptHandler       cpct_firmware
-     00004304  cpct_disableFirmware_asm           cpct_firmware
-     00004304  cpct_removeInterruptHandler_asm    cpct_firmware
-     00004314  cpct_drawSolidBox_asm              cpct_sprites
-     000043C0  _cpct_mode_rom_status              cpct_firmware
-     000043C1  cpct_getScreenPtr_asm              cpct_video
+     00004066  show_title_screen                  
+     00004097  _main                              cpct_keyboard
+     000040A7  start_game                         cpct_keyboard
+     000040FE  man_entity_getArray                cpct_keyboard
+     00004106  man_entity_init                    cpct_keyboard
+     00004111  man_entity_new                     cpct_keyboard
+     00004122  man_entity_create                  cpct_keyboard
+     0000412E  rendersys_Wipe                     
+     0000413C  rendersys_init                     
+     00004159  rendersys_update                   
+     00004195  inputsys_init                      cpct_keyboard
+     00004196  inputsys_waitForInput              cpct_keyboard
+     000041A3  inputsys_update                    cpct_keyboard
+     000041E6  _cpct_scanKeyboard_f               cpct_keyboard
+     000041E6  cpct_scanKeyboard_f_asm            cpct_keyboard
+     00004250  _cpct_isKeyPressed                 cpct_keyboard
+     00004250  cpct_isKeyPressed_asm              cpct_keyboard
+     0000425C  cpct_drawStringM1_asm              cpct_strings
+     00004280  cpct_drawCharM1_inner_asm          cpct_strings
+     000042C0  cpct_char2pxM1                     cpct_strings
+     000042D0  cpct_drawSprite_asm                cpct_sprites
+     00004370  _cpct_keyboardStatusBuffer         cpct_keyboard
+     0000437A  _cpct_isAnyKeyPressed_f            cpct_keyboard
+     0000437A  cpct_isAnyKeyPressed_f_asm         cpct_keyboard
+     00004395  cpct_zx7b_decrunch_s_asm           cpct_compression
+     000043D5  _cpct_waitVSYNC                    cpct_video
+     000043D5  cpct_waitVSYNC_asm                 cpct_video
+     000043DD  _cpct_disableFirmware              cpct_firmware
+     000043DD  _cpct_removeInterruptHandler       cpct_firmware
+     000043DD  cpct_disableFirmware_asm           cpct_firmware
+     000043DD  cpct_removeInterruptHandler_asm    cpct_firmware
+     000043ED  cpct_drawSolidBox_asm              cpct_sprites
+     00004499  _cpct_mode_rom_status              cpct_firmware
+     0000449A  cpct_getScreenPtr_asm              cpct_video
+     000044B6  cpct_setDrawCharM1_asm             cpct_strings
+     00004507  dc_mode1_ct                        
+
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 
 Files Linked                              [ module(s) ]
 
 obj/entity_manager.h.rel                  [  ]
 obj/physics_system.rel                    [  ]
+obj/game_manager.h.rel                    [ cpct_keyboard ]
 obj/input_system.h.rel                    [  ]
+obj/title_screen_creator.rel              [  ]
 obj/main.rel                              [ cpct_keyboard ]
+obj/game_manager.rel                      [ cpct_keyboard ]
 obj/entity_manager.rel                    [ cpct_keyboard ]
+obj/title_screen_creator.h.rel            [  ]
 obj/render_system.rel                     [  ]
 obj/input_system.rel                      [ cpct_keyboard ]
 obj/physics_system.h.rel                  [  ]
@@ -76,6 +91,10 @@ Libraries Linked                          [ object file ]
                                           [ cpct_scanKeyboard_f.rel ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_isKeyPressed.rel ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_drawStringM1_asmbindings.re ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_drawCharM1_inner.rel ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_drawSprite_asmbindings.rel ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
@@ -94,6 +113,10 @@ Libraries Linked                          [ object file ]
                                           [ cpc_mode_rom_status.rel ]
 /home/daniel/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_getScreenPtr_asmbindings.re ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_setDrawCharM1_asmbindings.r ]
+/home/daniel/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_dc_mode1_ct.rel ]
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 

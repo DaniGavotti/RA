@@ -13,6 +13,8 @@
 inputsys_init::
     ret
 
+
+;;lee el teclado y espera a que se presione cualquier tecla para devolver 1 en cualquer otro caso devuelve 0
 inputsys_waitForInput::
     ;;Scan Keys
     call cpct_scanKeyboard_f_asm

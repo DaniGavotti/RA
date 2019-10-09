@@ -2577,10 +2577,10 @@ Hexadecimal [16-Bits]
                      0003    10 max_entities = 3
                      000B    11 entity_size  == 11
                              12 
-   4078 00                   13 _entity_num: .db 0 
-   4079 7B 40                14 _entity_pend: .dw _entity_array
-   407B                      15 _entity_array: 
-   407B                      16 DefineEntityArray _entity_array, max_entities
+   40DD 00                   13 _entity_num: .db 0 
+   40DE E0 40                14 _entity_pend: .dw _entity_array
+   40E0                      15 _entity_array: 
+   40E0                      16 DefineEntityArray _entity_array, max_entities
                      0000     1     _c = 0
                               2     .rept max_entities
                               3         DefineEntityDefault _entity_array, \_c
@@ -2589,41 +2589,41 @@ Hexadecimal [16-Bits]
    0003                       1         DefineEntityDefault _entity_array, \_c
    0003                       1     DefineEntity _entity_array0, #0, #0, #0, #0, #0, #0, #0, #0, #0
    0003                       1     _entity_array0:
-   407B 00                    2         .db #0
-   407C 00                    3         .db #0
-   407D 00                    4         .db #0
-   407E 00                    5         .db #0
-   407F 00                    6         .db #0
-   4080 00                    7         .db #0
-   4081 00                    8         .db #0
-   4082 00 00                 9         .dw #0
-   4084 00                   10         .db #0
+   40E0 00                    2         .db #0
+   40E1 00                    3         .db #0
+   40E2 00                    4         .db #0
+   40E3 00                    5         .db #0
+   40E4 00                    6         .db #0
+   40E5 00                    7         .db #0
+   40E6 00                    8         .db #0
+   40E7 00 00                 9         .dw #0
+   40E9 00                   10         .db #0
                      0001     2         _c= _c + 1
-   4085                       1         DefineEntityDefault _entity_array, \_c
+   40EA                       1         DefineEntityDefault _entity_array, \_c
    000D                       1     DefineEntity _entity_array1, #0, #0, #0, #0, #0, #0, #0, #0, #0
    000D                       1     _entity_array1:
-   4085 00                    2         .db #0
-   4086 00                    3         .db #0
-   4087 00                    4         .db #0
-   4088 00                    5         .db #0
-   4089 00                    6         .db #0
-   408A 00                    7         .db #0
-   408B 00                    8         .db #0
-   408C 00 00                 9         .dw #0
-   408E 00                   10         .db #0
+   40EA 00                    2         .db #0
+   40EB 00                    3         .db #0
+   40EC 00                    4         .db #0
+   40ED 00                    5         .db #0
+   40EE 00                    6         .db #0
+   40EF 00                    7         .db #0
+   40F0 00                    8         .db #0
+   40F1 00 00                 9         .dw #0
+   40F3 00                   10         .db #0
                      0002     2         _c= _c + 1
-   408F                       1         DefineEntityDefault _entity_array, \_c
+   40F4                       1         DefineEntityDefault _entity_array, \_c
    0017                       1     DefineEntity _entity_array2, #0, #0, #0, #0, #0, #0, #0, #0, #0
    0017                       1     _entity_array2:
-   408F 00                    2         .db #0
-   4090 00                    3         .db #0
-   4091 00                    4         .db #0
-   4092 00                    5         .db #0
-   4093 00                    6         .db #0
-   4094 00                    7         .db #0
-   4095 00                    8         .db #0
-   4096 00 00                 9         .dw #0
-   4098 00                   10         .db #0
+   40F4 00                    2         .db #0
+   40F5 00                    3         .db #0
+   40F6 00                    4         .db #0
+   40F7 00                    5         .db #0
+   40F8 00                    6         .db #0
+   40F9 00                    7         .db #0
+   40FA 00                    8         .db #0
+   40FB 00 00                 9         .dw #0
+   40FD 00                   10         .db #0
                      0003     2         _c= _c + 1
                              17 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
@@ -2634,53 +2634,53 @@ Hexadecimal [16-Bits]
                              18 ;;
                              19 ;;          GET ARRAY
                              20 ;;
-   4099                      21 man_entity_getArray::
-   4099 DD 21 7B 40   [14]   22     ld ix, #_entity_array
-   409D 3A 78 40      [13]   23     ld a, (_entity_num)
-   40A0 C9            [10]   24     ret
+   40FE                      21 man_entity_getArray::
+   40FE DD 21 E0 40   [14]   22     ld ix, #_entity_array
+   4102 3A DD 40      [13]   23     ld a, (_entity_num)
+   4105 C9            [10]   24     ret
                              25 
                              26 ;;
                              27 ;;          INIT
                              28 ;;
-   40A1                      29 man_entity_init::
-   40A1 AF            [ 4]   30     xor a
-   40A2 32 78 40      [13]   31     ld (_entity_num), a
+   4106                      29 man_entity_init::
+   4106 AF            [ 4]   30     xor a
+   4107 32 DD 40      [13]   31     ld (_entity_num), a
                              32 
-   40A5 21 7B 40      [10]   33     ld hl, #_entity_array
-   40A8 22 79 40      [16]   34     ld (_entity_pend), hl
+   410A 21 E0 40      [10]   33     ld hl, #_entity_array
+   410D 22 DE 40      [16]   34     ld (_entity_pend), hl
                              35 
-   40AB C9            [10]   36     ret
+   4110 C9            [10]   36     ret
                              37 
                              38 ;;
                              39 ;;          NEW ENTITY
                              40 ;;
-   40AC                      41 man_entity_new::
-   40AC 21 78 40      [10]   42     ld hl, #_entity_num
-   40AF 34            [11]   43     inc (hl)
+   4111                      41 man_entity_new::
+   4111 21 DD 40      [10]   42     ld hl, #_entity_num
+   4114 34            [11]   43     inc (hl)
                              44 
-   40B0 2A 79 40      [16]   45     ld hl, (_entity_pend)
-   40B3 54            [ 4]   46     ld d, h
-   40B4 5D            [ 4]   47     ld e, l
-   40B5 01 0B 00      [10]   48     ld bc, #entity_size
-   40B8 09            [11]   49     add hl, bc
-   40B9 22 79 40      [16]   50     ld (_entity_pend), hl
+   4115 2A DE 40      [16]   45     ld hl, (_entity_pend)
+   4118 54            [ 4]   46     ld d, h
+   4119 5D            [ 4]   47     ld e, l
+   411A 01 0B 00      [10]   48     ld bc, #entity_size
+   411D 09            [11]   49     add hl, bc
+   411E 22 DE 40      [16]   50     ld (_entity_pend), hl
                              51 
-   40BC C9            [10]   52     ret
+   4121 C9            [10]   52     ret
                              53 
                              54 ;;
                              55 ;;          CREATE ENTITY
                              56 ;;
-   40BD                      57 man_entity_create::
-   40BD E5            [11]   58     push hl
-   40BE CD AC 40      [17]   59     call man_entity_new
+   4122                      57 man_entity_create::
+   4122 E5            [11]   58     push hl
+   4123 CD 11 41      [17]   59     call man_entity_new
                              60 
    0049                      61     ld__ixh_d
-   40C1 DD 62                 1    .dw #0x62DD  ;; Opcode for ld ixh, d
+   4126 DD 62                 1    .dw #0x62DD  ;; Opcode for ld ixh, d
    004B                      62     ld__ixl_e
-   40C3 DD 6B                 1    .dw #0x6BDD  ;; Opcode for ld ixl, e
+   4128 DD 6B                 1    .dw #0x6BDD  ;; Opcode for ld ixl, e
                              63 
-   40C5 E1            [10]   64     pop hl
-   40C6 ED B0         [21]   65     ldir
+   412A E1            [10]   64     pop hl
+   412B ED B0         [21]   65     ldir
                              66 
-   40C8 C9            [10]   67     ret
+   412D C9            [10]   67     ret
                              68 

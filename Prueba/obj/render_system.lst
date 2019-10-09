@@ -84,7 +84,21 @@ Hexadecimal [16-Bits]
 
 
 
-                              7 
+                              7 .include "physics_system.h.s"
+                              1 ;;
+                              2 ;;Physics.h.s
+                              3 ;;
+                              4 
+                     0050     5 screen_width == 80	; Ancho
+                     00C8     6 screen_heigth == 200	 ; Alto
+                     0001     7 gravity == 1
+                              8 
+                              9 .globl phy_update
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 5.
+Hexadecimal [16-Bits]
+
+
+
                               8 
                               9 
                      C000    10 screen_start = 0xC000
@@ -97,8 +111,8 @@ Hexadecimal [16-Bits]
    0002 2E 00         [ 7]   17     ld l, #0x00
    0004 EB            [ 4]   18     ex de, hl
    0005 3E 00         [ 7]   19     ld  a, #backgroun_color
-   0007 06 50         [ 7]   20     ld  b, #80    ;;w
-   0009 0E 19         [ 7]   21     ld  c, #25    ;;H
+   0007 06 50         [ 7]   20     ld  b, #screen_width    ;;w
+   0009 0E C8         [ 7]   21     ld  c, #screen_heigth    ;;H
    000B CD 00 00      [17]   22     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
                              23 
                              24 
@@ -139,12 +153,12 @@ Hexadecimal [16-Bits]
    0035 DD 46 02      [19]   59     ld  b, e_h(ix)    ;;w
    0038 DD 4E 03      [19]   60     ld  c, e_w(ix)    ;;H
    003B CD 00 00      [17]   61     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 5.
+                             62 
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 6.
 Hexadecimal [16-Bits]
 
 
 
-                             62 
                              63 
                              64     ;; Draw the new sprite and store the new position
    003E 11 00 C0      [10]   65     ld de, #screen_start

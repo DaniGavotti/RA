@@ -9,9 +9,13 @@
 -l z80
 obj/entity_manager.h.rel
 obj/physics_system.rel
+obj/game_manager.h.rel
 obj/input_system.h.rel
+obj/title_screen_creator.rel
 obj/main.rel
+obj/game_manager.rel
 obj/entity_manager.rel
+obj/title_screen_creator.h.rel
 obj/render_system.rel
 obj/input_system.rel
 obj/physics_system.h.rel

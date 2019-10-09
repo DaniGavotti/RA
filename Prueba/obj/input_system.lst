@@ -2580,73 +2580,75 @@ Hexadecimal [16-Bits]
    0000                      13 inputsys_init::
    0000 C9            [10]   14     ret
                              15 
-   0001                      16 inputsys_waitForInput::
-                             17     ;;Scan Keys
-   0001 CD 00 00      [17]   18     call cpct_scanKeyboard_f_asm
-                             19 
-                             20     ;;If any key pressed
-   0004 CD 00 00      [17]   21     call cpct_isAnyKeyPressed_f_asm
-   0007 3E 00         [ 7]   22     ld a, #0
-   0009 28 02         [12]   23     jr z, _notPressed
-   000B                      24 _pressed:
-   000B 3E 01         [ 7]   25     ld a, #1
-                             26     ;;Devuelve algo enun registro
-   000D                      27 _notPressed:
-   000D C9            [10]   28     ret
-                             29 
-                             30 
-   000E                      31 inputsys_update::
+                             16 
+                             17 ;;lee el teclado y espera a que se presione cualquier tecla para devolver 1 en cualquer otro caso devuelve 0
+   0001                      18 inputsys_waitForInput::
+                             19     ;;Scan Keys
+   0001 CD 00 00      [17]   20     call cpct_scanKeyboard_f_asm
+                             21 
+                             22     ;;If any key pressed
+   0004 CD 00 00      [17]   23     call cpct_isAnyKeyPressed_f_asm
+   0007 3E 00         [ 7]   24     ld a, #0
+   0009 28 02         [12]   25     jr z, _notPressed
+   000B                      26 _pressed:
+   000B 3E 01         [ 7]   27     ld a, #1
+                             28     ;;Devuelve algo enun registro
+   000D                      29 _notPressed:
+   000D C9            [10]   30     ret
+                             31 
                              32 
-                             33     ;;Check if character state is diferent from standing
+   000E                      33 inputsys_update::
                              34 
-   000E DD 7E 09      [19]   35     ld a, e_state(ix)
-   0011 FE 00         [ 7]   36     cp #0
-   0013 20 3B         [12]   37     jr nz, _notPressed_A
-                             38 
-                             39     ;;reset velocity
-   0015 DD 36 04 00   [19]   40     ld e_vx(ix), #0 ;;x_speed
-                             41     ;;ld e_vy(ix), #0 ;;y_speed
-                             42 
-                             43     ;;Scan Keys
-   0019 CD 00 00      [17]   44     call cpct_scanKeyboard_f_asm
-                             45 
-                             46     ;;If O pressed
-   001C 21 04 04      [10]   47     ld hl, #Key_O
-   001F CD 00 00      [17]   48     call cpct_isKeyPressed_asm
-   0022 28 04         [12]   49     jr z, _notPressed_O
-   0024                      50 _pressed_O:
-   0024 DD 36 04 FF   [19]   51     ld e_vx(ix), #-1
-   0028                      52 _notPressed_O:
-                             53 
-                             54     ;;If P pressed
-   0028 21 03 08      [10]   55     ld hl, #Key_P
-   002B CD 00 00      [17]   56     call cpct_isKeyPressed_asm
-   002E 28 04         [12]   57     jr z, _notPressed_P
-   0030                      58 _pressed_P:
-   0030 DD 36 04 01   [19]   59     ld e_vx(ix), #1
-   0034                      60 _notPressed_P:
-                             61 
+                             35     ;;Check if character state is diferent from standing
+                             36 
+   000E DD 7E 09      [19]   37     ld a, e_state(ix)
+   0011 FE 00         [ 7]   38     cp #0
+   0013 20 3B         [12]   39     jr nz, _notPressed_A
+                             40 
+                             41     ;;reset velocity
+   0015 DD 36 04 00   [19]   42     ld e_vx(ix), #0 ;;x_speed
+                             43     ;;ld e_vy(ix), #0 ;;y_speed
+                             44 
+                             45     ;;Scan Keys
+   0019 CD 00 00      [17]   46     call cpct_scanKeyboard_f_asm
+                             47 
+                             48     ;;If O pressed
+   001C 21 04 04      [10]   49     ld hl, #Key_O
+   001F CD 00 00      [17]   50     call cpct_isKeyPressed_asm
+   0022 28 04         [12]   51     jr z, _notPressed_O
+   0024                      52 _pressed_O:
+   0024 DD 36 04 FF   [19]   53     ld e_vx(ix), #-1
+   0028                      54 _notPressed_O:
+                             55 
+                             56     ;;If P pressed
+   0028 21 03 08      [10]   57     ld hl, #Key_P
+   002B CD 00 00      [17]   58     call cpct_isKeyPressed_asm
+   002E 28 04         [12]   59     jr z, _notPressed_P
+   0030                      60 _pressed_P:
+   0030 DD 36 04 01   [19]   61     ld e_vx(ix), #1
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
 Hexadecimal [16-Bits]
 
 
 
-                             62     ;;If Q pressed
-   0034 21 08 08      [10]   63     ld hl, #Key_Q
-   0037 CD 00 00      [17]   64     call cpct_isKeyPressed_asm
-   003A 28 08         [12]   65     jr z, _notPressed_Q
-   003C                      66 _pressed_Q:
-   003C DD 36 09 01   [19]   67     ld e_state(ix), #1
-   0040 DD 36 05 F6   [19]   68     ld e_vy(ix), #-10
-   0044                      69 _notPressed_Q:
-                             70 
-                             71     ;;If A pressed
-   0044 21 08 20      [10]   72     ld hl, #Key_A
-   0047 CD 00 00      [17]   73     call cpct_isKeyPressed_asm
-   004A 28 04         [12]   74     jr z, _notPressed_A
-   004C                      75 _pressed_A:
-   004C DD 36 05 04   [19]   76     ld e_vy(ix), #4
-   0050                      77 _notPressed_A:
-                             78 
-   0050 C9            [10]   79     ret
+   0034                      62 _notPressed_P:
+                             63 
+                             64     ;;If Q pressed
+   0034 21 08 08      [10]   65     ld hl, #Key_Q
+   0037 CD 00 00      [17]   66     call cpct_isKeyPressed_asm
+   003A 28 08         [12]   67     jr z, _notPressed_Q
+   003C                      68 _pressed_Q:
+   003C DD 36 09 01   [19]   69     ld e_state(ix), #1
+   0040 DD 36 05 F6   [19]   70     ld e_vy(ix), #-10
+   0044                      71 _notPressed_Q:
+                             72 
+                             73     ;;If A pressed
+   0044 21 08 20      [10]   74     ld hl, #Key_A
+   0047 CD 00 00      [17]   75     call cpct_isKeyPressed_asm
+   004A 28 04         [12]   76     jr z, _notPressed_A
+   004C                      77 _pressed_A:
+   004C DD 36 05 04   [19]   78     ld e_vy(ix), #4
+   0050                      79 _notPressed_A:
                              80 
+   0050 C9            [10]   81     ret
+                             82 

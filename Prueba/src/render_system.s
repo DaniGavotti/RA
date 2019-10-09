@@ -4,7 +4,7 @@
 
 .include "entity_manager.h.s"
 .include "render_system.h.s"
-
+.include "physics_system.h.s"
 
 
 screen_start = 0xC000
@@ -17,8 +17,8 @@ rendersys_Wipe::
     ld l, #0x00
     ex de, hl
     ld  a, #backgroun_color
-    ld  b, #80    ;;w
-    ld  c, #25    ;;H
+    ld  b, #screen_width    ;;w
+    ld  c, #screen_heigth    ;;H
     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
 
 

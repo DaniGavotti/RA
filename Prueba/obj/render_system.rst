@@ -84,89 +84,103 @@ Hexadecimal [16-Bits]
 
 
 
-                              7 
+                              7 .include "physics_system.h.s"
+                              1 ;;
+                              2 ;;Physics.h.s
+                              3 ;;
+                              4 
+                     0050     5 screen_width == 80	; Ancho
+                     00C8     6 screen_heigth == 200	 ; Alto
+                     0001     7 gravity == 1
+                              8 
+                              9 .globl phy_update
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 5.
+Hexadecimal [16-Bits]
+
+
+
                               8 
                               9 
                      C000    10 screen_start = 0xC000
                      0000    11 backgroun_color = 0x00
                              12 
                              13 
-   40C9                      14 rendersys_Wipe::
+   412E                      14 rendersys_Wipe::
                              15     ;; Erase the las sprite position
-   40C9 26 C0         [ 7]   16     ld h, #0xC0
-   40CB 2E 00         [ 7]   17     ld l, #0x00
-   40CD EB            [ 4]   18     ex de, hl
-   40CE 3E 00         [ 7]   19     ld  a, #backgroun_color
-   40D0 06 50         [ 7]   20     ld  b, #80    ;;w
-   40D2 0E 19         [ 7]   21     ld  c, #25    ;;H
-   40D4 CD 14 43      [17]   22     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+   412E 26 C0         [ 7]   16     ld h, #0xC0
+   4130 2E 00         [ 7]   17     ld l, #0x00
+   4132 EB            [ 4]   18     ex de, hl
+   4133 3E 00         [ 7]   19     ld  a, #backgroun_color
+   4135 06 50         [ 7]   20     ld  b, #screen_width    ;;w
+   4137 0E C8         [ 7]   21     ld  c, #screen_heigth    ;;H
+   4139 CD ED 43      [17]   22     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
                              23 
                              24 
                              25 ;;Initializes the render system by storing a pointer to the first element of the entity array
-   40D7                      26 rendersys_init::
-   40D7 F5            [11]   27     push af
+   413C                      26 rendersys_init::
+   413C F5            [11]   27     push af
                              28 
-   40D8 11 00 C0      [10]   29     ld de, #screen_start
-   40DB DD 46 01      [19]   30     ld  b, e_y(ix)    ;;y
-   40DE DD 4E 00      [19]   31     ld  c, e_x(ix)    ;;x
-   40E1 CD C1 43      [17]   32     call cpct_getScreenPtr_asm
+   413D 11 00 C0      [10]   29     ld de, #screen_start
+   4140 DD 46 01      [19]   30     ld  b, e_y(ix)    ;;y
+   4143 DD 4E 00      [19]   31     ld  c, e_x(ix)    ;;x
+   4146 CD 9A 44      [17]   32     call cpct_getScreenPtr_asm
                              33 
-   40E4 DD 74 08      [19]   34     ld e_lp_h(ix), h
-   40E7 DD 75 07      [19]   35     ld e_lp_l(ix), l
+   4149 DD 74 08      [19]   34     ld e_lp_h(ix), h
+   414C DD 75 07      [19]   35     ld e_lp_l(ix), l
                              36 
-   40EA F1            [10]   37     pop af
-   40EB 3D            [ 4]   38     dec a
-   40EC C8            [11]   39     ret z
+   414F F1            [10]   37     pop af
+   4150 3D            [ 4]   38     dec a
+   4151 C8            [11]   39     ret z
                              40 
-   40ED 01 0B 00      [10]   41     ld bc, #entity_size
-   40F0 DD 09         [15]   42     add ix, bc
+   4152 01 0B 00      [10]   41     ld bc, #entity_size
+   4155 DD 09         [15]   42     add ix, bc
                              43 
-   40F2 18 E3         [12]   44     jr rendersys_init
+   4157 18 E3         [12]   44     jr rendersys_init
                              45 
                              46 ;;INPUT
                              47 ;;  IX: Pointer to first entity
                              48 ;;   A: number of entities to render
-   40F4                      49 rendersys_update::
+   4159                      49 rendersys_update::
                              50 
-   40F4                      51 _renloop:
-   40F4 F5            [11]   52     push af
+   4159                      51 _renloop:
+   4159 F5            [11]   52     push af
                              53 
                              54     ;; Erase the las sprite position
-   40F5 DD 66 08      [19]   55     ld h, e_lp_h(ix)
-   40F8 DD 6E 07      [19]   56     ld l, e_lp_l(ix)
-   40FB EB            [ 4]   57     ex de, hl
-   40FC 3E 00         [ 7]   58     ld  a, #backgroun_color
-   40FE DD 46 02      [19]   59     ld  b, e_h(ix)    ;;w
-   4101 DD 4E 03      [19]   60     ld  c, e_w(ix)    ;;H
-   4104 CD 14 43      [17]   61     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 5.
+   415A DD 66 08      [19]   55     ld h, e_lp_h(ix)
+   415D DD 6E 07      [19]   56     ld l, e_lp_l(ix)
+   4160 EB            [ 4]   57     ex de, hl
+   4161 3E 00         [ 7]   58     ld  a, #backgroun_color
+   4163 DD 46 02      [19]   59     ld  b, e_h(ix)    ;;w
+   4166 DD 4E 03      [19]   60     ld  c, e_w(ix)    ;;H
+   4169 CD ED 43      [17]   61     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+                             62 
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 6.
 Hexadecimal [16-Bits]
 
 
 
-                             62 
                              63 
                              64     ;; Draw the new sprite and store the new position
-   4107 11 00 C0      [10]   65     ld de, #screen_start
-   410A DD 46 01      [19]   66     ld  b, e_y(ix)    ;;y
-   410D DD 4E 00      [19]   67     ld  c, e_x(ix)    ;;x
-   4110 CD C1 43      [17]   68     call cpct_getScreenPtr_asm
-   4113 DD 74 08      [19]   69     ld e_lp_h(ix), h
-   4116 DD 75 07      [19]   70     ld e_lp_l(ix), l
-   4119 EB            [ 4]   71     ex de, hl
+   416C 11 00 C0      [10]   65     ld de, #screen_start
+   416F DD 46 01      [19]   66     ld  b, e_y(ix)    ;;y
+   4172 DD 4E 00      [19]   67     ld  c, e_x(ix)    ;;x
+   4175 CD 9A 44      [17]   68     call cpct_getScreenPtr_asm
+   4178 DD 74 08      [19]   69     ld e_lp_h(ix), h
+   417B DD 75 07      [19]   70     ld e_lp_l(ix), l
+   417E EB            [ 4]   71     ex de, hl
                              72     ;;ld  h, e_sprite(ix)
                              73     ;;ld  l, e_sprite_l(ix)
-   411A DD 7E 06      [19]   74     ld a, e_sprite(ix)
-   411D DD 46 02      [19]   75     ld  b, e_h(ix)    ;;w
-   4120 DD 4E 03      [19]   76     ld  c, e_w(ix)    ;;H
-   4123 CD 14 43      [17]   77     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+   417F DD 7E 06      [19]   74     ld a, e_sprite(ix)
+   4182 DD 46 02      [19]   75     ld  b, e_h(ix)    ;;w
+   4185 DD 4E 03      [19]   76     ld  c, e_w(ix)    ;;H
+   4188 CD ED 43      [17]   77     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
                              78 
                              79 
-   4126 F1            [10]   80     pop af
+   418B F1            [10]   80     pop af
                              81 
-   4127 3D            [ 4]   82     dec a
-   4128 C8            [11]   83     ret z
+   418C 3D            [ 4]   82     dec a
+   418D C8            [11]   83     ret z
                              84 
-   4129 01 0B 00      [10]   85     ld bc, #entity_size
-   412C DD 09         [15]   86     add ix, bc
-   412E 18 C4         [12]   87     jr _renloop
+   418E 01 0B 00      [10]   85     ld bc, #entity_size
+   4191 DD 09         [15]   86     add ix, bc
+   4193 18 C4         [12]   87     jr _renloop

@@ -4,7 +4,7 @@ Hexadecimal [16-Bits]
 
 
                               1 ;;
-                              2 ;;Input System
+                              2 ;;Game Manager h
                               3 ;;
                               4 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
@@ -2571,84 +2571,69 @@ Hexadecimal [16-Bits]
 
 
 
-                              7 ;;System that will read the keys the user is presing and modify the player's character attributes acordingly
-                              8 
-                              9 .globl cpct_scanKeyboard_f_asm
-                             10 .globl cpct_isKeyPressed_asm
-                             11 .globl cpct_isAnyKeyPressed_f_asm
-                             12 
-   4195                      13 inputsys_init::
-   4195 C9            [10]   14     ret
-                             15 
-                             16 
-                             17 ;;lee el teclado y espera a que se presione cualquier tecla para devolver 1 en cualquer otro caso devuelve 0
-   4196                      18 inputsys_waitForInput::
-                             19     ;;Scan Keys
-   4196 CD E6 41      [17]   20     call cpct_scanKeyboard_f_asm
-                             21 
-                             22     ;;If any key pressed
-   4199 CD 7A 43      [17]   23     call cpct_isAnyKeyPressed_f_asm
-   419C 3E 00         [ 7]   24     ld a, #0
-   419E 28 02         [12]   25     jr z, _notPressed
-   41A0                      26 _pressed:
-   41A0 3E 01         [ 7]   27     ld a, #1
-                             28     ;;Devuelve algo enun registro
-   41A2                      29 _notPressed:
-   41A2 C9            [10]   30     ret
-                             31 
-                             32 
-   41A3                      33 inputsys_update::
-                             34 
-                             35     ;;Check if character state is diferent from standing
-                             36 
-   41A3 DD 7E 09      [19]   37     ld a, e_state(ix)
-   41A6 FE 00         [ 7]   38     cp #0
-   41A8 20 3B         [12]   39     jr nz, _notPressed_A
-                             40 
-                             41     ;;reset velocity
-   41AA DD 36 04 00   [19]   42     ld e_vx(ix), #0 ;;x_speed
-                             43     ;;ld e_vy(ix), #0 ;;y_speed
-                             44 
-                             45     ;;Scan Keys
-   41AE CD E6 41      [17]   46     call cpct_scanKeyboard_f_asm
-                             47 
-                             48     ;;If O pressed
-   41B1 21 04 04      [10]   49     ld hl, #Key_O
-   41B4 CD 50 42      [17]   50     call cpct_isKeyPressed_asm
-   41B7 28 04         [12]   51     jr z, _notPressed_O
-   41B9                      52 _pressed_O:
-   41B9 DD 36 04 FF   [19]   53     ld e_vx(ix), #-1
-   41BD                      54 _notPressed_O:
-                             55 
-                             56     ;;If P pressed
-   41BD 21 03 08      [10]   57     ld hl, #Key_P
-   41C0 CD 50 42      [17]   58     call cpct_isKeyPressed_asm
-   41C3 28 04         [12]   59     jr z, _notPressed_P
-   41C5                      60 _pressed_P:
-   41C5 DD 36 04 01   [19]   61     ld e_vx(ix), #1
+                              7 .include "render_system.h.s"
+                              1 ;;
+                              2 ;;Render System .h
+                              3 ;;
+                              4 
+                              5 .globl rendersys_Wipe
+                              6 .globl rendersys_init
+                              7 .globl rendersys_update
+                              8 .globl cpct_getScreenPtr_asm
+                              9 .globl cpct_drawSolidBox_asm
+                             10 .globl cpct_zx7b_decrunch_s_asm
+                             11 .globl cpct_drawSprite_asm
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
 Hexadecimal [16-Bits]
 
 
 
-   41C9                      62 _notPressed_P:
-                             63 
-                             64     ;;If Q pressed
-   41C9 21 08 08      [10]   65     ld hl, #Key_Q
-   41CC CD 50 42      [17]   66     call cpct_isKeyPressed_asm
-   41CF 28 08         [12]   67     jr z, _notPressed_Q
-   41D1                      68 _pressed_Q:
-   41D1 DD 36 09 01   [19]   69     ld e_state(ix), #1
-   41D5 DD 36 05 F6   [19]   70     ld e_vy(ix), #-10
-   41D9                      71 _notPressed_Q:
-                             72 
-                             73     ;;If A pressed
-   41D9 21 08 20      [10]   74     ld hl, #Key_A
-   41DC CD 50 42      [17]   75     call cpct_isKeyPressed_asm
-   41DF 28 04         [12]   76     jr z, _notPressed_A
-   41E1                      77 _pressed_A:
-   41E1 DD 36 05 04   [19]   78     ld e_vy(ix), #4
-   41E5                      79 _notPressed_A:
-                             80 
-   41E5 C9            [10]   81     ret
-                             82 
+                              8 .include "physics_system.h.s"
+                              1 ;;
+                              2 ;;Physics.h.s
+                              3 ;;
+                              4 
+                     0050     5 screen_width == 80	; Ancho
+                     00C8     6 screen_heigth == 200	 ; Alto
+                     0001     7 gravity == 1
+                              8 
+                              9 .globl phy_update
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 53.
+Hexadecimal [16-Bits]
+
+
+
+                              9 .include "input_system.h.s"
+                              1 ;;
+                              2 ;;input system h
+                              3 ;;
+                              4 
+                              5 .globl inputsys_init
+                              6 .globl inputsys_waitForInput
+                              7 .globl inputsys_update
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 54.
+Hexadecimal [16-Bits]
+
+
+
+                             10 .include "title_screen_creator.h.s"
+                              1 ;;
+                              2 ;;Title Screen Creator H
+                              3 ;;
+                              4 
+                              5 .globl cpct_getScreenPtr_asm
+                              6 .globl cpct_setDrawCharM1_asm
+                              7 .globl cpct_drawStringM1_asm
+                              8 .globl show_title_screen
+                              9 
+                     0000    10 string_Init == 0
+                     0001    11 string_Over == 1
+                     0002    12 string_Erase == 2
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 55.
+Hexadecimal [16-Bits]
+
+
+
+                             11 
+                             12 .globl cpct_waitVSYNC_asm
+                             13 .globl start_game
