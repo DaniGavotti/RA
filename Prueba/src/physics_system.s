@@ -35,7 +35,7 @@ _valid_y:
 
 _invalid_y:
     ld a, e_vy(ix)
-    neg
+    ld e_state(ix), #0
     ld e_vy(ix), #0
 
 _endif_y:

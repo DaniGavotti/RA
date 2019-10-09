@@ -24,6 +24,13 @@ e_lp_h = 8
 e_state = 9
 sizeof_e= 10
 
+
+;;states
+standing = 0
+jumping = 1
+crouched = 2
+
+
 .macro DefineEntityDefault _name, _n
     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
 .endm

@@ -57,19 +57,20 @@ Symbol Table
     _c      =  0003     |   0 _entity_   0003 R   |   0 _entity_   0003 R
   0 _entity_   000D R   |   0 _entity_   0017 R   |   0 _entity_   0000 R
   0 _entity_   0001 R   |     cpct_pag=  0000     |     cpct_pag=  0010 
-    cpct_pag=  0020     |     cpct_pag=  0030     |     e_h     =  0002 
+    cpct_pag=  0020     |     cpct_pag=  0030     |     crouched=  0002 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Symbol Table
 
-    e_lp_h  =  0008     |     e_lp_l  =  0007     |     e_sprite=  0006 
-    e_state =  0009     |     e_vx    =  0004     |     e_vy    =  0005 
-    e_w     =  0003     |     e_x     =  0000     |     e_y     =  0001 
-    entity_s=  000B G   |   0 man_enti   0045 GR  |   0 man_enti   0021 GR
-  0 man_enti   0029 GR  |   0 man_enti   0034 GR  |     max_enti=  0003 
-    opc_DI  =  00F3     |     opc_EI  =  00FB     |     opc_JR  =  0018 
-    opc_LD_D=  0016     |     sizeof_e=  000A 
+    e_h     =  0002     |     e_lp_h  =  0008     |     e_lp_l  =  0007 
+    e_sprite=  0006     |     e_state =  0009     |     e_vx    =  0004 
+    e_vy    =  0005     |     e_w     =  0003     |     e_x     =  0000 
+    e_y     =  0001     |     entity_s=  000B G   |     jumping =  0001 
+  0 man_enti   0045 GR  |   0 man_enti   0021 GR  |   0 man_enti   0029 GR
+  0 man_enti   0034 GR  |     max_enti=  0003     |     opc_DI  =  00F3 
+    opc_EI  =  00FB     |     opc_JR  =  0018     |     opc_LD_D=  0016 
+    sizeof_e=  000A     |     standing=  0000 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]

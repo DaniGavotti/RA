@@ -29,6 +29,13 @@ _notPressed:
 
 
 inputsys_update::
+
+    ;;Check if character state is diferent from standing
+
+    ld a, e_state(ix)
+    cp #0
+    jr nz, _notPressed_A
+
     ;;reset velocity
     ld e_vx(ix), #0 ;;x_speed
     ;;ld e_vy(ix), #0 ;;y_speed
@@ -57,7 +64,8 @@ _notPressed_P:
     call cpct_isKeyPressed_asm
     jr z, _notPressed_Q
 _pressed_Q:
-    ld e_vy(ix), #-8
+    ld e_state(ix), #1
+    ld e_vy(ix), #-10
 _notPressed_Q:
 
     ;;If A pressed

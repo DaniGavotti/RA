@@ -2534,22 +2534,29 @@ Hexadecimal [16-Bits]
                      0009    24 e_state = 9
                      000A    25 sizeof_e= 10
                              26 
-                             27 .macro DefineEntityDefault _name, _n
-                             28     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
-                             29 .endm
-                             30 
-                             31 .macro DefineEntityArray _name, _N
-                             32     _c = 0
-                             33     .rept _N
-                             34         DefineEntityDefault _name, \_c
-                             35         _c= _c + 1
-                             36     .endm
-                             37 .endm
-                             38 
-                             39 .globl man_entity_getArray
-                             40 .globl man_entity_create
-                             41 .globl entity_size
-                             42 .globl man_entity_init
+                             27 
+                             28 ;;states
+                     0000    29 standing = 0
+                     0001    30 jumping = 1
+                     0002    31 crouched = 2
+                             32 
+                             33 
+                             34 .macro DefineEntityDefault _name, _n
+                             35     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
+                             36 .endm
+                             37 
+                             38 .macro DefineEntityArray _name, _N
+                             39     _c = 0
+                             40     .rept _N
+                             41         DefineEntityDefault _name, \_c
+                             42         _c= _c + 1
+                             43     .endm
+                             44 .endm
+                             45 
+                             46 .globl man_entity_getArray
+                             47 .globl man_entity_create
+                             48 .globl entity_size
+                             49 .globl man_entity_init
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 50.
 Hexadecimal [16-Bits]
 
@@ -2575,41 +2582,41 @@ Hexadecimal [16-Bits]
                               6 .area _DATA
                               7 .area _CODE
                               8 
-   404C                       9 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
+   404E                       9 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
    0000                       1     player:
-   404C 14                    2         .db 20
-   404D 14                    3         .db 20
-   404E 20                    4         .db 32
-   404F 04                    5         .db 4
-   4050 00                    6         .db 0
-   4051 00                    7         .db 0
-   4052 0F                    8         .db 0x0F
-   4053 00 C0                 9         .dw 0xC000
-   4055 00                   10         .db 0
+   404E 14                    2         .db 20
+   404F 14                    3         .db 20
+   4050 20                    4         .db 32
+   4051 04                    5         .db 4
+   4052 00                    6         .db 0
+   4053 00                    7         .db 0
+   4054 0F                    8         .db 0x0F
+   4055 00 C0                 9         .dw 0xC000
+   4057 00                   10         .db 0
                              10 ;;enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
                              11 
-   4056                      12 _main::
+   4058                      12 _main::
                              13    ;; Disable firmware to prevent it from interfering with string drawing
-   4056 CD F7 42      [17]   14    call cpct_disableFirmware_asm
+   4058 CD 04 43      [17]   14    call cpct_disableFirmware_asm
                              15 
-   4059 21 4C 40      [10]   16    ld hl, #player
-   405C CD BB 40      [17]   17    call man_entity_create
+   405B 21 4E 40      [10]   16    ld hl, #player
+   405E CD BD 40      [17]   17    call man_entity_create
                              18 
                              19    ;;ld hl, #enemy
                              20    ;;call entityman_create
                              21 
-   405F                      22 loop:
+   4061                      22 loop:
                              23 
-   405F CD EF 42      [17]   24    call cpct_waitVSYNC_asm
+   4061 CD FC 42      [17]   24    call cpct_waitVSYNC_asm
                              25 
-   4062 CD 97 40      [17]   26    call man_entity_getArray
-   4065 CD 3C 41      [17]   27    call inputsys_update
+   4064 CD 99 40      [17]   26    call man_entity_getArray
+   4067 CD 3E 41      [17]   27    call inputsys_update
                              28 
-   4068 CD 97 40      [17]   29    call man_entity_getArray
-   406B CD 00 40      [17]   30    call phy_update
+   406A CD 99 40      [17]   29    call man_entity_getArray
+   406D CD 00 40      [17]   30    call phy_update
                              31 
-   406E CD 97 40      [17]   32    call man_entity_getArray
-   4071 CD F2 40      [17]   33    call rendersys_update
+   4070 CD 99 40      [17]   32    call man_entity_getArray
+   4073 CD F4 40      [17]   33    call rendersys_update
                              34 
-   4074 18 E9         [12]   35    jr loop
+   4076 18 E9         [12]   35    jr loop
                              36 

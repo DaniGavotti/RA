@@ -39,22 +39,29 @@ Hexadecimal [16-Bits]
                      0009    24 e_state = 9
                      000A    25 sizeof_e= 10
                              26 
-                             27 .macro DefineEntityDefault _name, _n
-                             28     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
-                             29 .endm
-                             30 
-                             31 .macro DefineEntityArray _name, _N
-                             32     _c = 0
-                             33     .rept _N
-                             34         DefineEntityDefault _name, \_c
-                             35         _c= _c + 1
-                             36     .endm
-                             37 .endm
-                             38 
-                             39 .globl man_entity_getArray
-                             40 .globl man_entity_create
-                             41 .globl entity_size
-                             42 .globl man_entity_init
+                             27 
+                             28 ;;states
+                     0000    29 standing = 0
+                     0001    30 jumping = 1
+                     0002    31 crouched = 2
+                             32 
+                             33 
+                             34 .macro DefineEntityDefault _name, _n
+                             35     DefineEntity _name'_n, #0, #0, #0, #0, #0, #0, #0, #0, #0
+                             36 .endm
+                             37 
+                             38 .macro DefineEntityArray _name, _N
+                             39     _c = 0
+                             40     .rept _N
+                             41         DefineEntityDefault _name, \_c
+                             42         _c= _c + 1
+                             43     .endm
+                             44 .endm
+                             45 
+                             46 .globl man_entity_getArray
+                             47 .globl man_entity_create
+                             48 .globl entity_size
+                             49 .globl man_entity_init
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]
 
@@ -88,49 +95,49 @@ Hexadecimal [16-Bits]
                              31 
    4018                      32 _valid_y:
    4018 DD 77 01      [19]   33     ld  e_y(ix), a
-   401B 18 09         [12]   34     jr _endif_y
+   401B 18 0B         [12]   34     jr _endif_y
                              35 
    401D                      36 _invalid_y:
    401D DD 7E 05      [19]   37     ld a, e_vy(ix)
-   4020 ED 44         [ 8]   38     neg
-   4022 DD 36 05 00   [19]   39     ld e_vy(ix), #0
+   4020 DD 36 09 00   [19]   38     ld e_state(ix), #0
+   4024 DD 36 05 00   [19]   39     ld e_vy(ix), #0
                              40 
-   4026                      41 _endif_y:
+   4028                      41 _endif_y:
                              42 
                              43     ;;Updates x
-   4026 3E 51         [ 7]   44     ld a, #screen_width + 1
-   4028 DD 96 03      [19]   45 	sub e_w(ix)
-   402B 4F            [ 4]   46 	ld c, a
+   4028 3E 51         [ 7]   44     ld a, #screen_width + 1
+   402A DD 96 03      [19]   45 	sub e_w(ix)
+   402D 4F            [ 4]   46 	ld c, a
                              47 
                              48 
-   402C DD 7E 00      [19]   49     ld  a, e_x(ix)    ;;x
-   402F DD 86 04      [19]   50     add e_vx(ix)
-   4032 B9            [ 4]   51     cp c
+   402E DD 7E 00      [19]   49     ld  a, e_x(ix)    ;;x
+   4031 DD 86 04      [19]   50     add e_vx(ix)
+   4034 B9            [ 4]   51     cp c
                              52 
-   4033 30 05         [12]   53     jr nc, _invalid_x
+   4035 30 05         [12]   53     jr nc, _invalid_x
                              54 
-   4035                      55 _valid_x:
-   4035 DD 77 00      [19]   56     ld  e_x(ix), a
-   4038 18 08         [12]   57     jr _endif_x
+   4037                      55 _valid_x:
+   4037 DD 77 00      [19]   56     ld  e_x(ix), a
+   403A 18 08         [12]   57     jr _endif_x
                              58 
-   403A                      59 _invalid_x:
-   403A DD 7E 04      [19]   60     ld a, e_vx(ix)
+   403C                      59 _invalid_x:
+   403C DD 7E 04      [19]   60     ld a, e_vx(ix)
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 4.
 Hexadecimal [16-Bits]
 
 
 
-   403D ED 44         [ 8]   61     neg
-   403F DD 77 04      [19]   62     ld e_vx(ix), a
+   403F ED 44         [ 8]   61     neg
+   4041 DD 77 04      [19]   62     ld e_vx(ix), a
                              63 
-   4042                      64 _endif_x:
+   4044                      64 _endif_x:
                              65 
                              66 
-   4042 F1            [10]   67     pop af
+   4044 F1            [10]   67     pop af
                              68 
-   4043 3D            [ 4]   69     dec a
-   4044 C8            [11]   70     ret z
+   4045 3D            [ 4]   69     dec a
+   4046 C8            [11]   70     ret z
                              71 
-   4045 01 0B 00      [10]   72     ld bc, #entity_size
-   4048 DD 09         [15]   73     add ix, bc
-   404A 18 B4         [12]   74     jr _phyloop
+   4047 01 0B 00      [10]   72     ld bc, #entity_size
+   404A DD 09         [15]   73     add ix, bc
+   404C 18 B2         [12]   74     jr _phyloop

@@ -4,12 +4,13 @@ Hexadecimal [16-Bits]
 Symbol Table
 
     .__.$$$.=  2710 L   |     .__.ABS.=  0000 G   |     .__.CPU.=  0000 L
-    .__.H$L.=  0000 L   |     e_h     =  0002     |     e_lp_h  =  0008 
-    e_lp_l  =  0007     |     e_sprite=  0006     |     e_state =  0009 
-    e_vx    =  0004     |     e_vy    =  0005     |     e_w     =  0003 
-    e_x     =  0000     |     e_y     =  0001     |     entity_s   **** GX
-    man_enti   **** GX  |     man_enti   **** GX  |     man_enti   **** GX
-    sizeof_e=  000A 
+    .__.H$L.=  0000 L   |     crouched=  0002     |     e_h     =  0002 
+    e_lp_h  =  0008     |     e_lp_l  =  0007     |     e_sprite=  0006 
+    e_state =  0009     |     e_vx    =  0004     |     e_vy    =  0005 
+    e_w     =  0003     |     e_x     =  0000     |     e_y     =  0001 
+    entity_s   **** GX  |     jumping =  0001     |     man_enti   **** GX
+    man_enti   **** GX  |     man_enti   **** GX  |     sizeof_e=  000A 
+    standing=  0000 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]

@@ -54,29 +54,30 @@ Symbol Table
     Key_U   =  0405     |     Key_V   =  8006     |     Key_W   =  0807 
     Key_X   =  8007     |     Key_Y   =  0805     |     Key_Z   =  8008 
     PAL_INKR=  0040     |     PAL_PENR=  0000     |     PPI_PORT=  00F5 
-  0 _notPres   000D R   |   0 _notPres   0045 R   |   0 _notPres   0021 R
-  0 _notPres   002D R   |   0 _notPres   0039 R   |   0 _pressed   000B R
-  0 _pressed   0041 R   |   0 _pressed   001D R   |   0 _pressed   0029 R
-  0 _pressed   0035 R   |     cpct_isA   **** GX  |     cpct_isK   **** GX
+  0 _notPres   000D R   |   0 _notPres   0050 R   |   0 _notPres   0028 R
+  0 _notPres   0034 R   |   0 _notPres   0044 R   |   0 _pressed   000B R
+  0 _pressed   004C R   |   0 _pressed   0024 R   |   0 _pressed   0030 R
+  0 _pressed   003C R   |     cpct_isA   **** GX  |     cpct_isK   **** GX
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Symbol Table
 
     cpct_pag=  0000     |     cpct_pag=  0010     |     cpct_pag=  0020 
-    cpct_pag=  0030     |     cpct_sca   **** GX  |     e_h     =  0002 
-    e_lp_h  =  0008     |     e_lp_l  =  0007     |     e_sprite=  0006 
-    e_state =  0009     |     e_vx    =  0004     |     e_vy    =  0005 
-    e_w     =  0003     |     e_x     =  0000     |     e_y     =  0001 
-    entity_s   **** GX  |   0 inputsys   0000 GR  |   0 inputsys   000E GR
-  0 inputsys   0001 GR  |     man_enti   **** GX  |     man_enti   **** GX
-    man_enti   **** GX  |     opc_DI  =  00F3     |     opc_EI  =  00FB 
-    opc_JR  =  0018     |     opc_LD_D=  0016     |     sizeof_e=  000A 
+    cpct_pag=  0030     |     cpct_sca   **** GX  |     crouched=  0002 
+    e_h     =  0002     |     e_lp_h  =  0008     |     e_lp_l  =  0007 
+    e_sprite=  0006     |     e_state =  0009     |     e_vx    =  0004 
+    e_vy    =  0005     |     e_w     =  0003     |     e_x     =  0000 
+    e_y     =  0001     |     entity_s   **** GX  |   0 inputsys   0000 GR
+  0 inputsys   000E GR  |   0 inputsys   0001 GR  |     jumping =  0001 
+    man_enti   **** GX  |     man_enti   **** GX  |     man_enti   **** GX
+    opc_DI  =  00F3     |     opc_EI  =  00FB     |     opc_JR  =  0018 
+    opc_LD_D=  0016     |     sizeof_e=  000A     |     standing=  0000 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE      size   46   flags    0
+   0 _CODE      size   51   flags    0
 
