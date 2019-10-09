@@ -3,6 +3,7 @@
 ;;
 
 .include "entity_manager.h.s"
+.include "physics_system.h.s"
 
 ;; Updates the position of entities by adding their speed to their position
 ;;  IX: Pointer to first entity

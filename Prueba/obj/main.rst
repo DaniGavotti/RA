@@ -2562,7 +2562,24 @@ Hexadecimal [16-Bits]
 
 
 
-                              3 .include "physics_system.h.s"
+                              3 .include "render_system.h.s"
+                              1 ;;
+                              2 ;;Render System .h
+                              3 ;;
+                              4 
+                              5 .globl rendersys_Wipe
+                              6 .globl rendersys_init
+                              7 .globl rendersys_update
+                              8 .globl cpct_getScreenPtr_asm
+                              9 .globl cpct_drawSolidBox_asm
+                             10 .globl cpct_zx7b_decrunch_s_asm
+                             11 .globl cpct_drawSprite_asm
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 51.
+Hexadecimal [16-Bits]
+
+
+
+                              4 .include "physics_system.h.s"
                               1 ;;
                               2 ;;Physics.h.s
                               3 ;;
@@ -2572,17 +2589,33 @@ Hexadecimal [16-Bits]
                      0001     7 gravity == 1
                               8 
                               9 .globl phy_update
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 51.
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
 Hexadecimal [16-Bits]
 
 
 
+                              5 .include "input_system.h.s"
+                              1 ;;
+                              2 ;;input system h
+                              3 ;;
                               4 
-                              5 
-                              6 .area _DATA
-                              7 .area _CODE
-                              8 
-   404E                       9 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
+                              5 .globl inputsys_init
+                              6 .globl inputsys_waitForInput
+                              7 .globl inputsys_update
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 53.
+Hexadecimal [16-Bits]
+
+
+
+                              6 
+                              7 
+                              8 .area _DATA
+                              9 .area _CODE
+                             10 
+                             11 .globl cpct_disableFirmware_asm
+                             12 .globl cpct_waitVSYNC_asm
+                             13 
+   404E                      14 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
    0000                       1     player:
    404E 14                    2         .db 20
    404F 14                    3         .db 20
@@ -2593,30 +2626,29 @@ Hexadecimal [16-Bits]
    4054 0F                    8         .db 0x0F
    4055 00 C0                 9         .dw 0xC000
    4057 00                   10         .db 0
-                             10 ;;enemy: .db 40, 40, 4, 8, -1, 2, 0xFF, 0xC000
-                             11 
-   4058                      12 _main::
-                             13    ;; Disable firmware to prevent it from interfering with string drawing
-   4058 CD 04 43      [17]   14    call cpct_disableFirmware_asm
                              15 
-   405B 21 4E 40      [10]   16    ld hl, #player
-   405E CD BD 40      [17]   17    call man_entity_create
-                             18 
-                             19    ;;ld hl, #enemy
-                             20    ;;call entityman_create
-                             21 
-   4061                      22 loop:
-                             23 
-   4061 CD FC 42      [17]   24    call cpct_waitVSYNC_asm
+   4058                      16 _main::
+                             17    ;; Disable firmware to prevent it from interfering with string drawing
+   4058 CD 04 43      [17]   18    call cpct_disableFirmware_asm
+                             19 
+   405B 21 4E 40      [10]   20    ld hl, #player
+   405E CD BD 40      [17]   21    call man_entity_create
+                             22 
+                             23    ;;ld hl, #enemy
+                             24    ;;call entityman_create
                              25 
-   4064 CD 99 40      [17]   26    call man_entity_getArray
-   4067 CD 3E 41      [17]   27    call inputsys_update
-                             28 
-   406A CD 99 40      [17]   29    call man_entity_getArray
-   406D CD 00 40      [17]   30    call phy_update
-                             31 
-   4070 CD 99 40      [17]   32    call man_entity_getArray
-   4073 CD F4 40      [17]   33    call rendersys_update
-                             34 
-   4076 18 E9         [12]   35    jr loop
-                             36 
+   4061                      26 loop:
+                             27 
+   4061 CD FC 42      [17]   28    call cpct_waitVSYNC_asm
+                             29 
+   4064 CD 99 40      [17]   30    call man_entity_getArray
+   4067 CD 3E 41      [17]   31    call inputsys_update
+                             32 
+   406A CD 99 40      [17]   33    call man_entity_getArray
+   406D CD 00 40      [17]   34    call phy_update
+                             35 
+   4070 CD 99 40      [17]   36    call man_entity_getArray
+   4073 CD F4 40      [17]   37    call rendersys_update
+                             38 
+   4076 18 E9         [12]   39    jr loop
+                             40 

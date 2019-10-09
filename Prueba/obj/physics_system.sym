@@ -10,10 +10,10 @@ Symbol Table
     e_h     =  0002     |     e_lp_h  =  0008     |     e_lp_l  =  0007 
     e_sprite=  0006     |     e_state =  0009     |     e_vx    =  0004 
     e_vy    =  0005     |     e_w     =  0003     |     e_x     =  0000 
-    e_y     =  0001     |     entity_s   **** GX  |     gravity    **** GX
+    e_y     =  0001     |     entity_s   **** GX  |     gravity =  0001 G
     jumping =  0001     |     man_enti   **** GX  |     man_enti   **** GX
-    man_enti   **** GX  |   0 phy_upda   0000 GR  |     screen_h   **** GX
-    screen_w   **** GX  |     sizeof_e=  000A     |     standing=  0000 
+    man_enti   **** GX  |   0 phy_upda   0000 GR  |     screen_h=  00C8 G
+    screen_w=  0050 G   |     sizeof_e=  000A     |     standing=  0000 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]

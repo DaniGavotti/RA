@@ -9,6 +9,7 @@
 -l z80
 obj/entity_manager.h.rel
 obj/physics_system.rel
+obj/input_system.h.rel
 obj/main.rel
 obj/entity_manager.rel
 obj/render_system.rel

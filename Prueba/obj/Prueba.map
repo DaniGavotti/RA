@@ -61,6 +61,7 @@ Files Linked                              [ module(s) ]
 
 obj/entity_manager.h.rel                  [  ]
 obj/physics_system.rel                    [  ]
+obj/input_system.h.rel                    [  ]
 obj/main.rel                              [ cpct_keyboard ]
 obj/entity_manager.rel                    [ cpct_keyboard ]
 obj/render_system.rel                     [  ]
