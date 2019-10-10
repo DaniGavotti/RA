@@ -2635,10 +2635,11 @@ Hexadecimal [16-Bits]
                               6 .globl cpct_setDrawCharM1_asm
                               7 .globl cpct_drawStringM1_asm
                               8 .globl show_title_screen
-                              9 
-                     0000    10 string_Init == 0
-                     0001    11 string_Over == 1
-                     0002    12 string_Erase == 2
+                              9 .globl hide_title_screen
+                             10 
+                     0000    11 string_Init == 0
+                     0001    12 string_Over == 1
+                     0002    13 string_Erase == 2
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 56.
 Hexadecimal [16-Bits]
 
@@ -2653,51 +2654,50 @@ Hexadecimal [16-Bits]
 
 
                               6 
-   409D                       7 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
+   40B3                       7 DefineEntity player, 20, 20, 32, 4, 0, 0, 0x0F, 0xC000, 0
    0000                       1     player:
-   409D 14                    2         .db 20
-   409E 14                    3         .db 20
-   409F 20                    4         .db 32
-   40A0 04                    5         .db 4
-   40A1 00                    6         .db 0
-   40A2 00                    7         .db 0
-   40A3 0F                    8         .db 0x0F
-   40A4 00 C0                 9         .dw 0xC000
-   40A6 00                   10         .db 0
+   40B3 14                    2         .db 20
+   40B4 14                    3         .db 20
+   40B5 20                    4         .db 32
+   40B6 04                    5         .db 4
+   40B7 00                    6         .db 0
+   40B8 00                    7         .db 0
+   40B9 0F                    8         .db 0x0F
+   40BA 00 C0                 9         .dw 0xC000
+   40BC 00                   10         .db 0
                               8 
                               9 
-   40A7                      10 start_game::
+   40BD                      10 start_game::
                              11 
-   40A7 21 9D 40      [10]   12    ld hl, #player
-   40AA CD 22 41      [17]   13    call man_entity_create
-   40AD CD FE 40      [17]   14    call man_entity_getArray
-   40B0 CD 3C 41      [17]   15    call rendersys_init
+   40BD 21 B3 40      [10]   12    ld hl, #player
+   40C0 CD 36 41      [17]   13    call man_entity_create
+   40C3 CD 12 41      [17]   14    call man_entity_getArray
+   40C6 CD 50 41      [17]   15    call rendersys_init
                              16    
-   40B3 3E 00         [ 7]   17    ld a, #string_Init
-   40B5 CD 66 40      [17]   18    call show_title_screen
+   40C9 3E 00         [ 7]   17    ld a, #string_Init
+   40CB CD 63 40      [17]   18    call show_title_screen
                              19 
                              20    ;;Hay que mostrar por pantalla un mensaje de inicio y despues borrarlo
                              21 
-   40B8                      22 _wait_to_start:
-   40B8 CD 96 41      [17]   23     call inputsys_waitForInput
-   40BB FE 00         [ 7]   24     cp #0
-   40BD 28 F9         [12]   25     jr z, _wait_to_start
-   40BF 3E 02         [ 7]   26     ld a, #string_Erase
-   40C1 CD 66 40      [17]   27     call show_title_screen
-   40C4 18 00         [12]   28     jr game_loop
+   40CE                      22 _wait_to_start:
+   40CE CD AA 41      [17]   23     call inputsys_waitForInput
+   40D1 FE 00         [ 7]   24     cp #0
+   40D3 28 F9         [12]   25     jr z, _wait_to_start
+   40D5 CD 94 40      [17]   26     call hide_title_screen
+   40D8 18 00         [12]   27     jr game_loop
+                             28 
                              29 
-                             30 
-   40C6                      31 game_loop:
-                             32 
-   40C6 CD 07 44      [17]   33    call cpct_waitVSYNC_asm
-                             34 
-   40C9 CD FE 40      [17]   35    call man_entity_getArray
-   40CC CD A3 41      [17]   36    call inputsys_update
-                             37 
-   40CF CD FE 40      [17]   38    call man_entity_getArray
-   40D2 CD 00 40      [17]   39    call phy_update
-                             40 
-   40D5 CD FE 40      [17]   41    call man_entity_getArray
-   40D8 CD 59 41      [17]   42    call rendersys_update
-                             43 
-   40DB 18 E9         [12]   44    jr game_loop
+   40DA                      30 game_loop:
+                             31 
+   40DA CD 1B 44      [17]   32    call cpct_waitVSYNC_asm
+                             33 
+   40DD CD 12 41      [17]   34    call man_entity_getArray
+   40E0 CD B7 41      [17]   35    call inputsys_update
+                             36 
+   40E3 CD 12 41      [17]   37    call man_entity_getArray
+   40E6 CD 00 40      [17]   38    call phy_update
+                             39 
+   40E9 CD 12 41      [17]   40    call man_entity_getArray
+   40EC CD 6D 41      [17]   41    call rendersys_update
+                             42 
+   40EF 18 E9         [12]   43    jr game_loop

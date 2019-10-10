@@ -20,10 +20,11 @@ Hexadecimal [16-Bits]
                               6 .globl cpct_setDrawCharM1_asm
                               7 .globl cpct_drawStringM1_asm
                               8 .globl show_title_screen
-                              9 
-                     0000    10 string_Init == 0
-                     0001    11 string_Over == 1
-                     0002    12 string_Erase == 2
+                              9 .globl hide_title_screen
+                             10 
+                     0000    11 string_Init == 0
+                     0001    12 string_Over == 1
+                     0002    13 string_Erase == 2
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]
 
@@ -91,3 +92,25 @@ Hexadecimal [16-Bits]
 
                              58 
    0048 C9            [10]   59     ret
+                             60 
+   0049                      61 hide_title_screen::
+                             62 
+                             63     ;; Set up draw char colours before calling draw string
+   0049 16 00         [ 7]   64     ld    d, #0         ;; D = Background PEN (0)
+   004B 1E 00         [ 7]   65     ld    e, #0        ;; E = Foreground PEN (3)
+                             66 
+   004D CD 00 00      [17]   67     call cpct_setDrawCharM1_asm   ;; Set draw char colours
+                             68 
+                             69     ;; Calculate a video-memory location for printing a string
+   0050 11 00 C0      [10]   70     ld   de, #0xC000 ;; DE = Pointer to start of the screen
+   0053 06 18         [ 7]   71     ld    b, #24                  ;; B = y coordinate (24 = 0x18)
+   0055 0E 10         [ 7]   72     ld    c, #16                  ;; C = x coordinate (16 = 0x10)
+                             73 
+   0057 CD 00 00      [17]   74     call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
+                             75 
+   005A FD 21 00 00   [14]   76     ld   iy, #stringTitulo    ;; IY = Pointer to the string 
+                             77 
+                             78 
+   005E CD 00 00      [17]   79     call cpct_drawStringM1_asm  ;; Draw the string
+                             80 
+   0061 C9            [10]   81     ret

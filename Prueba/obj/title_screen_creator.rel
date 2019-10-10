@@ -1,5 +1,5 @@
 XL2
-H 1 areas 8 global symbols
+H 1 areas 9 global symbols
 S string_Init Def0000
 S cpct_drawStringM1_asm Ref0000
 S string_Over Def0001
@@ -7,8 +7,9 @@ S .__.ABS. Def0000
 S string_Erase Def0002
 S cpct_setDrawCharM1_asm Ref0000
 S cpct_getScreenPtr_asm Ref0000
-A _CODE size 49 flags 0 addr 0
+A _CODE size 62 flags 0 addr 0
 S show_title_screen Def0018
+S hide_title_screen Def0049
 T 00 00 53 74 61 72 74 20 47 61 6D 65 21 00 47 61
 R 00 00 00 00
 T 0E 00 6D 65 20 4F 76 65 72 21 00 00
@@ -37,3 +38,9 @@ T 45 00
 R 00 00 00 00
 T 45 00 CD 00 00 C9
 R 00 00 00 00 02 03 01 00
+T 49 00
+R 00 00 00 00
+T 49 00 16 00 1E 00 CD 00 00 11 00 C0 06 18 0E 10
+R 00 00 00 00 02 07 05 00
+T 57 00 CD 00 00 FD 21 00 00 CD 00 00 C9
+R 00 00 00 00 02 03 06 00 00 07 00 00 02 0A 01 00

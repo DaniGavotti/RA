@@ -2604,7 +2604,7 @@ Hexadecimal [16-Bits]
    000E DD 7E 09      [19]   37     ld a, e_state(ix)
                              38     ;;If character state is jumping
    0011 FE 01         [ 7]   39     cp #jumping
-   0013 28 51         [12]   40     jr z, _notPressed_A
+   0013 28 6D         [12]   40     jr z, _endInput
                              41 
                              42     ;;If charcter state is crouched
    0015 FE 02         [ 7]   43     cp #crouched

@@ -23,8 +23,7 @@ _wait_to_start:
     call inputsys_waitForInput
     cp #0
     jr z, _wait_to_start
-    ld a, #string_Erase
-    call show_title_screen
+    call hide_title_screen
     jr game_loop
 
 

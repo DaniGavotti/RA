@@ -4,9 +4,9 @@ Hexadecimal [16-Bits]
 Symbol Table
 
     .__.$$$.=  2710 L   |     .__.ABS.=  0000 G   |     .__.CPU.=  0000 L
-    .__.H$L.=  0000 L   |   0 _endif_x   0044 R   |   0 _endif_y   0028 R
-  0 _invalid   003C R   |   0 _invalid   001D R   |   0 _phyloop   0000 R
-  0 _valid_x   0037 R   |   0 _valid_y   0018 R   |     crouched=  0002 
+    .__.H$L.=  0000 L   |   0 _endif_x   0041 R   |   0 _endif_y   0025 R
+  0 _invalid   0039 R   |   0 _invalid   001D R   |   0 _phyloop   0000 R
+  0 _valid_x   0034 R   |   0 _valid_y   0018 R   |     crouched=  0002 
     e_h     =  0002     |     e_lp_h  =  0008     |     e_lp_l  =  0007 
     e_sprite=  0006     |     e_state =  0009     |     e_vx    =  0004 
     e_vy    =  0005     |     e_w     =  0003     |     e_x     =  0000 
@@ -20,5 +20,5 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE      size   4E   flags    0
+   0 _CODE      size   4B   flags    0
 

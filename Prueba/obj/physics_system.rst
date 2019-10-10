@@ -110,49 +110,48 @@ Hexadecimal [16-Bits]
                              32 
    4018                      33 _valid_y:
    4018 DD 77 01      [19]   34     ld  e_y(ix), a
-   401B 18 0B         [12]   35     jr _endif_y
+   401B 18 08         [12]   35     jr _endif_y
                              36 
    401D                      37 _invalid_y:
-   401D DD 7E 05      [19]   38     ld a, e_vy(ix)
-   4020 DD 36 09 00   [19]   39     ld e_state(ix), #0
-   4024 DD 36 05 00   [19]   40     ld e_vy(ix), #0
-                             41 
-   4028                      42 _endif_y:
-                             43 
-                             44     ;;Updates x
-   4028 3E 51         [ 7]   45     ld a, #screen_width + 1
-   402A DD 96 03      [19]   46 	sub e_w(ix)
-   402D 4F            [ 4]   47 	ld c, a
+   401D DD 36 09 00   [19]   38     ld e_state(ix), #standing
+   4021 DD 36 05 00   [19]   39     ld e_vy(ix), #0
+                             40 
+   4025                      41 _endif_y:
+                             42 
+                             43     ;;Updates x
+   4025 3E 51         [ 7]   44     ld a, #screen_width + 1
+   4027 DD 96 03      [19]   45 	sub e_w(ix)
+   402A 4F            [ 4]   46 	ld c, a
+                             47 
                              48 
-                             49 
-   402E DD 7E 00      [19]   50     ld  a, e_x(ix)    ;;x
-   4031 DD 86 04      [19]   51     add e_vx(ix)
-   4034 B9            [ 4]   52     cp c
-                             53 
-   4035 30 05         [12]   54     jr nc, _invalid_x
-                             55 
-   4037                      56 _valid_x:
-   4037 DD 77 00      [19]   57     ld  e_x(ix), a
-   403A 18 08         [12]   58     jr _endif_x
-                             59 
-   403C                      60 _invalid_x:
-   403C DD 7E 04      [19]   61     ld a, e_vx(ix)
+   402B DD 7E 00      [19]   49     ld  a, e_x(ix)    ;;x
+   402E DD 86 04      [19]   50     add e_vx(ix)
+   4031 B9            [ 4]   51     cp c
+                             52 
+   4032 30 05         [12]   53     jr nc, _invalid_x
+                             54 
+   4034                      55 _valid_x:
+   4034 DD 77 00      [19]   56     ld  e_x(ix), a
+   4037 18 08         [12]   57     jr _endif_x
+                             58 
+   4039                      59 _invalid_x:
+   4039 DD 7E 04      [19]   60     ld a, e_vx(ix)
+   403C ED 44         [ 8]   61     neg
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 5.
 Hexadecimal [16-Bits]
 
 
 
-   403F ED 44         [ 8]   62     neg
-   4041 DD 77 04      [19]   63     ld e_vx(ix), a
-                             64 
-   4044                      65 _endif_x:
+   403E DD 77 04      [19]   62     ld e_vx(ix), a
+                             63 
+   4041                      64 _endif_x:
+                             65 
                              66 
-                             67 
-   4044 F1            [10]   68     pop af
-                             69 
-   4045 3D            [ 4]   70     dec a
-   4046 C8            [11]   71     ret z
-                             72 
-   4047 01 0B 00      [10]   73     ld bc, #entity_size
-   404A DD 09         [15]   74     add ix, bc
-   404C 18 B2         [12]   75     jr _phyloop
+   4041 F1            [10]   67     pop af
+                             68 
+   4042 3D            [ 4]   69     dec a
+   4043 C8            [11]   70     ret z
+                             71 
+   4044 01 0B 00      [10]   72     ld bc, #entity_size
+   4047 DD 09         [15]   73     add ix, bc
+   4049 18 B5         [12]   74     jr _phyloop

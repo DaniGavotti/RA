@@ -67,20 +67,21 @@ Symbol Table
     e_lp_l  =  0007     |     e_sprite=  0006     |     e_state =  0009 
     e_vx    =  0004     |     e_vy    =  0005     |     e_w     =  0003 
     e_x     =  0000     |     e_y     =  0001     |     entity_s   **** GX
-  0 game_loo   0029 R   |     gravity =  0001 G   |     inputsys   **** GX
-    inputsys   **** GX  |     inputsys   **** GX  |     jumping =  0001 
-    man_enti   **** GX  |     man_enti   **** GX  |     man_enti   **** GX
-    opc_DI  =  00F3     |     opc_EI  =  00FB     |     opc_JR  =  0018 
-    opc_LD_D=  0016     |     phy_upda   **** GX  |   0 player     0000 R
-    rendersy   **** GX  |     rendersy   **** GX  |     rendersy   **** GX
-    screen_h=  00C8 G   |     screen_w=  0050 G   |     show_tit   **** GX
-    sizeof_e=  000A     |     standing=  0000     |   0 start_ga   000A GR
-    string_E=  0002 G   |     string_I=  0000 G   |     string_O=  0001 G
+  0 game_loo   0027 R   |     gravity =  0001 G   |     hide_tit   **** GX
+    inputsys   **** GX  |     inputsys   **** GX  |     inputsys   **** GX
+    jumping =  0001     |     man_enti   **** GX  |     man_enti   **** GX
+    man_enti   **** GX  |     opc_DI  =  00F3     |     opc_EI  =  00FB 
+    opc_JR  =  0018     |     opc_LD_D=  0016     |     phy_upda   **** GX
+  0 player     0000 R   |     rendersy   **** GX  |     rendersy   **** GX
+    rendersy   **** GX  |     screen_h=  00C8 G   |     screen_w=  0050 G
+    show_tit   **** GX  |     sizeof_e=  000A     |     standing=  0000 
+  0 start_ga   000A GR  |     string_E=  0002 G   |     string_I=  0000 G
+    string_O=  0001 G
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE      size   40   flags    0
+   0 _CODE      size   3E   flags    0
 

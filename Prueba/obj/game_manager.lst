@@ -2635,10 +2635,11 @@ Hexadecimal [16-Bits]
                               6 .globl cpct_setDrawCharM1_asm
                               7 .globl cpct_drawStringM1_asm
                               8 .globl show_title_screen
-                              9 
-                     0000    10 string_Init == 0
-                     0001    11 string_Over == 1
-                     0002    12 string_Erase == 2
+                              9 .globl hide_title_screen
+                             10 
+                     0000    11 string_Init == 0
+                     0001    12 string_Over == 1
+                     0002    13 string_Erase == 2
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 56.
 Hexadecimal [16-Bits]
 
@@ -2682,22 +2683,21 @@ Hexadecimal [16-Bits]
    001B CD 00 00      [17]   23     call inputsys_waitForInput
    001E FE 00         [ 7]   24     cp #0
    0020 28 F9         [12]   25     jr z, _wait_to_start
-   0022 3E 02         [ 7]   26     ld a, #string_Erase
-   0024 CD 00 00      [17]   27     call show_title_screen
-   0027 18 00         [12]   28     jr game_loop
+   0022 CD 00 00      [17]   26     call hide_title_screen
+   0025 18 00         [12]   27     jr game_loop
+                             28 
                              29 
-                             30 
-   0029                      31 game_loop:
-                             32 
-   0029 CD 00 00      [17]   33    call cpct_waitVSYNC_asm
-                             34 
-   002C CD 00 00      [17]   35    call man_entity_getArray
-   002F CD 00 00      [17]   36    call inputsys_update
-                             37 
-   0032 CD 00 00      [17]   38    call man_entity_getArray
-   0035 CD 00 00      [17]   39    call phy_update
-                             40 
-   0038 CD 00 00      [17]   41    call man_entity_getArray
-   003B CD 00 00      [17]   42    call rendersys_update
-                             43 
-   003E 18 E9         [12]   44    jr game_loop
+   0027                      30 game_loop:
+                             31 
+   0027 CD 00 00      [17]   32    call cpct_waitVSYNC_asm
+                             33 
+   002A CD 00 00      [17]   34    call man_entity_getArray
+   002D CD 00 00      [17]   35    call inputsys_update
+                             36 
+   0030 CD 00 00      [17]   37    call man_entity_getArray
+   0033 CD 00 00      [17]   38    call phy_update
+                             39 
+   0036 CD 00 00      [17]   40    call man_entity_getArray
+   0039 CD 00 00      [17]   41    call rendersys_update
+                             42 
+   003C 18 E9         [12]   43    jr game_loop

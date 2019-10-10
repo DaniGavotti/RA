@@ -2632,10 +2632,11 @@ Hexadecimal [16-Bits]
                               6 .globl cpct_setDrawCharM1_asm
                               7 .globl cpct_drawStringM1_asm
                               8 .globl show_title_screen
-                              9 
-                     0000    10 string_Init == 0
-                     0001    11 string_Over == 1
-                     0002    12 string_Erase == 2
+                              9 .globl hide_title_screen
+                             10 
+                     0000    11 string_Init == 0
+                     0001    12 string_Over == 1
+                     0002    13 string_Erase == 2
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 56.
 Hexadecimal [16-Bits]
 
@@ -2656,8 +2657,8 @@ Hexadecimal [16-Bits]
                               7 .globl cpct_disableFirmware_asm
                               8 
                               9 
-   4097                      10 _main::
+   40AD                      10 _main::
                              11    ;; Disable firmware to prevent it from interfering with string drawing
-   4097 CD 0F 44      [17]   12    call cpct_disableFirmware_asm
-   409A CD A7 40      [17]   13    call start_game
+   40AD CD 23 44      [17]   12    call cpct_disableFirmware_asm
+   40B0 CD BD 40      [17]   13    call start_game
                              14 

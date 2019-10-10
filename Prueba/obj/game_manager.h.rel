@@ -1,5 +1,5 @@
 XL2
-H 1 areas 1B global symbols
+H 1 areas 1C global symbols
 M cpct_keyboard
 S rendersys_update Ref0000
 S gravity Def0001
@@ -24,6 +24,7 @@ S cpct_zx7b_decrunch_s_asm Ref0000
 S rendersys_init Ref0000
 S phy_update Ref0000
 S entity_size Ref0000
+S hide_title_screen Ref0000
 S cpct_drawSolidBox_asm Ref0000
 S cpct_setDrawCharM1_asm Ref0000
 S screen_width Def0050

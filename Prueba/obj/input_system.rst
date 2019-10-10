@@ -2577,110 +2577,110 @@ Hexadecimal [16-Bits]
                              10 .globl cpct_isKeyPressed_asm
                              11 .globl cpct_isAnyKeyPressed_f_asm
                              12 
-   4195                      13 inputsys_init::
-   4195 C9            [10]   14     ret
+   41A9                      13 inputsys_init::
+   41A9 C9            [10]   14     ret
                              15 
                              16 
                              17 ;;lee el teclado y espera a que se presione cualquier tecla para devolver 1 en cualquer otro caso devuelve 0
-   4196                      18 inputsys_waitForInput::
+   41AA                      18 inputsys_waitForInput::
                              19     ;;Scan Keys
-   4196 CD 18 42      [17]   20     call cpct_scanKeyboard_f_asm
+   41AA CD 2C 42      [17]   20     call cpct_scanKeyboard_f_asm
                              21 
                              22     ;;If any key pressed
-   4199 CD AC 43      [17]   23     call cpct_isAnyKeyPressed_f_asm
-   419C 3E 00         [ 7]   24     ld a, #0
-   419E 28 02         [12]   25     jr z, _notPressed
-   41A0                      26 _pressed:
-   41A0 3E 01         [ 7]   27     ld a, #1
+   41AD CD C0 43      [17]   23     call cpct_isAnyKeyPressed_f_asm
+   41B0 3E 00         [ 7]   24     ld a, #0
+   41B2 28 02         [12]   25     jr z, _notPressed
+   41B4                      26 _pressed:
+   41B4 3E 01         [ 7]   27     ld a, #1
                              28     ;;Devuelve algo enun registro
-   41A2                      29 _notPressed:
-   41A2 C9            [10]   30     ret
+   41B6                      29 _notPressed:
+   41B6 C9            [10]   30     ret
                              31 
                              32 
-   41A3                      33 inputsys_update::
+   41B7                      33 inputsys_update::
                              34 
                              35     ;;Check if character state is diferent from standing
                              36 
-   41A3 DD 7E 09      [19]   37     ld a, e_state(ix)
+   41B7 DD 7E 09      [19]   37     ld a, e_state(ix)
                              38     ;;If character state is jumping
-   41A6 FE 01         [ 7]   39     cp #jumping
-   41A8 28 51         [12]   40     jr z, _notPressed_A
+   41BA FE 01         [ 7]   39     cp #jumping
+   41BC 28 6D         [12]   40     jr z, _endInput
                              41 
                              42     ;;If charcter state is crouched
-   41AA FE 02         [ 7]   43     cp #crouched
-   41AC 20 02         [12]   44     jr nz, _begin
-   41AE 18 4D         [12]   45     jr _crouched_player
+   41BE FE 02         [ 7]   43     cp #crouched
+   41C0 20 02         [12]   44     jr nz, _begin
+   41C2 18 4D         [12]   45     jr _crouched_player
                              46 
-   41B0                      47 _begin:
+   41C4                      47 _begin:
                              48     ;;reset velocity and state
-   41B0 DD 36 04 00   [19]   49     ld e_vx(ix), #0 ;;x_speed
+   41C4 DD 36 04 00   [19]   49     ld e_vx(ix), #0 ;;x_speed
                              50     ;;ld e_vy(ix), #0 ;;y_speed
                              51 
                              52 
                              53     ;;Scan Keys
-   41B4 CD 18 42      [17]   54     call cpct_scanKeyboard_f_asm
+   41C8 CD 2C 42      [17]   54     call cpct_scanKeyboard_f_asm
                              55 
                              56     ;;If O pressed
-   41B7 21 04 04      [10]   57     ld hl, #Key_O
-   41BA CD 82 42      [17]   58     call cpct_isKeyPressed_asm
-   41BD 28 04         [12]   59     jr z, _notPressed_O
-   41BF                      60 _pressed_O:
-   41BF DD 36 04 FF   [19]   61     ld e_vx(ix), #-1
+   41CB 21 04 04      [10]   57     ld hl, #Key_O
+   41CE CD 96 42      [17]   58     call cpct_isKeyPressed_asm
+   41D1 28 04         [12]   59     jr z, _notPressed_O
+   41D3                      60 _pressed_O:
+   41D3 DD 36 04 FF   [19]   61     ld e_vx(ix), #-1
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
 Hexadecimal [16-Bits]
 
 
 
-   41C3                      62 _notPressed_O:
+   41D7                      62 _notPressed_O:
                              63 
                              64     ;;If P pressed
-   41C3 21 03 08      [10]   65     ld hl, #Key_P
-   41C6 CD 82 42      [17]   66     call cpct_isKeyPressed_asm
-   41C9 28 04         [12]   67     jr z, _notPressed_P
-   41CB                      68 _pressed_P:
-   41CB DD 36 04 01   [19]   69     ld e_vx(ix), #1
-   41CF                      70 _notPressed_P:
+   41D7 21 03 08      [10]   65     ld hl, #Key_P
+   41DA CD 96 42      [17]   66     call cpct_isKeyPressed_asm
+   41DD 28 04         [12]   67     jr z, _notPressed_P
+   41DF                      68 _pressed_P:
+   41DF DD 36 04 01   [19]   69     ld e_vx(ix), #1
+   41E3                      70 _notPressed_P:
                              71 
                              72     ;;If Q pressed(Jump)
-   41CF 21 08 08      [10]   73     ld hl, #Key_Q
-   41D2 CD 82 42      [17]   74     call cpct_isKeyPressed_asm
-   41D5 28 08         [12]   75     jr z, _notPressed_Q
-   41D7                      76 _pressed_Q:
-   41D7 DD 36 09 01   [19]   77     ld e_state(ix), #jumping
-   41DB DD 36 05 F1   [19]   78     ld e_vy(ix), #-15
-   41DF                      79 _notPressed_Q:
+   41E3 21 08 08      [10]   73     ld hl, #Key_Q
+   41E6 CD 96 42      [17]   74     call cpct_isKeyPressed_asm
+   41E9 28 08         [12]   75     jr z, _notPressed_Q
+   41EB                      76 _pressed_Q:
+   41EB DD 36 09 01   [19]   77     ld e_state(ix), #jumping
+   41EF DD 36 05 F1   [19]   78     ld e_vy(ix), #-15
+   41F3                      79 _notPressed_Q:
                              80 
                              81 
                              82     ;;If A pressed(Crouched)
-   41DF 21 08 20      [10]   83     ld hl, #Key_A
-   41E2 CD 82 42      [17]   84     call cpct_isKeyPressed_asm
-   41E5 28 14         [12]   85     jr z, _notPressed_A
-   41E7                      86 _pressed_A:
+   41F3 21 08 20      [10]   83     ld hl, #Key_A
+   41F6 CD 96 42      [17]   84     call cpct_isKeyPressed_asm
+   41F9 28 14         [12]   85     jr z, _notPressed_A
+   41FB                      86 _pressed_A:
                              87     ;;if a is pressed the player will crouch
-   41E7 DD 7E 01      [19]   88     ld a, e_y(ix)
-   41EA C6 0F         [ 7]   89     add #15
-   41EC DD 77 01      [19]   90     ld e_y(ix), a
-   41EF DD 36 02 10   [19]   91     ld e_h(ix), #16
-   41F3 DD 36 09 02   [19]   92     ld e_state(ix), #crouched
-   41F7 DD 36 05 04   [19]   93     ld e_vy(ix), #4
-   41FB                      94 _notPressed_A:
-   41FB 18 1A         [12]   95     jr _endInput
+   41FB DD 7E 01      [19]   88     ld a, e_y(ix)
+   41FE C6 0F         [ 7]   89     add #15
+   4200 DD 77 01      [19]   90     ld e_y(ix), a
+   4203 DD 36 02 10   [19]   91     ld e_h(ix), #16
+   4207 DD 36 09 02   [19]   92     ld e_state(ix), #crouched
+   420B DD 36 05 04   [19]   93     ld e_vy(ix), #4
+   420F                      94 _notPressed_A:
+   420F 18 1A         [12]   95     jr _endInput
                              96 
-   41FD                      97 _crouched_player:
+   4211                      97 _crouched_player:
                              98     ;;If A pressed(Crouched)
-   41FD 21 08 20      [10]   99     ld hl, #Key_A
-   4200 CD 82 42      [17]  100     call cpct_isKeyPressed_asm
-   4203 28 02         [12]  101     jr z, _reset_state
-   4205 18 10         [12]  102     jr _endInput
-   4207                     103 _reset_state:
+   4211 21 08 20      [10]   99     ld hl, #Key_A
+   4214 CD 96 42      [17]  100     call cpct_isKeyPressed_asm
+   4217 28 02         [12]  101     jr z, _reset_state
+   4219 18 10         [12]  102     jr _endInput
+   421B                     103 _reset_state:
                             104     ;;If state crouched and A is no pressed reset player size
-   4207 DD 7E 01      [19]  105     ld a, e_y(ix)
-   420A D6 11         [ 7]  106     sub #17
-   420C DD 77 01      [19]  107     ld e_y(ix), a
-   420F DD 36 02 20   [19]  108     ld e_h(ix), #32
-   4213 DD 36 09 00   [19]  109     ld e_state(ix), #standing
+   421B DD 7E 01      [19]  105     ld a, e_y(ix)
+   421E D6 11         [ 7]  106     sub #17
+   4220 DD 77 01      [19]  107     ld e_y(ix), a
+   4223 DD 36 02 20   [19]  108     ld e_h(ix), #32
+   4227 DD 36 09 00   [19]  109     ld e_state(ix), #standing
                             110 
-   4217                     111 _endInput:
+   422B                     111 _endInput:
                             112 
-   4217 C9            [10]  113     ret
+   422B C9            [10]  113     ret
                             114 

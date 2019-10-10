@@ -11,7 +11,8 @@ Hexadecimal [16-Bits]
                               6 .globl cpct_setDrawCharM1_asm
                               7 .globl cpct_drawStringM1_asm
                               8 .globl show_title_screen
-                              9 
-                     0000    10 string_Init == 0
-                     0001    11 string_Over == 1
-                     0002    12 string_Erase == 2
+                              9 .globl hide_title_screen
+                             10 
+                     0000    11 string_Init == 0
+                     0001    12 string_Over == 1
+                     0002    13 string_Erase == 2

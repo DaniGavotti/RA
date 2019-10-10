@@ -1,11 +1,12 @@
 XL2
-H 1 areas 8 global symbols
+H 1 areas 9 global symbols
 S string_Init Def0000
 S cpct_drawStringM1_asm Ref0000
 S string_Over Def0001
 S .__.ABS. Def0000
 S show_title_screen Ref0000
 S string_Erase Def0002
+S hide_title_screen Ref0000
 S cpct_setDrawCharM1_asm Ref0000
 S cpct_getScreenPtr_asm Ref0000
 A _CODE size 0 flags 0 addr 0

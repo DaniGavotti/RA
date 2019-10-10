@@ -37,7 +37,7 @@ inputsys_update::
     ld a, e_state(ix)
     ;;If character state is jumping
     cp #jumping
-    jr z, _notPressed_A
+    jr z, _endInput
 
     ;;If charcter state is crouched
     cp #crouched
