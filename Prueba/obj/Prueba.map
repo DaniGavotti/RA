@@ -16,15 +16,15 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000000B  entity_size                        cpct_keyboard
      00000050  screen_width                       
      000000C8  screen_heigth                      
-     0000050B  l__CODE                         
+     0000053D  l__CODE                         
      00004000  s__CODE                         
-     0000450B  s__DATA                         
+     0000453D  s__DATA                         
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    0000050B =        1291. bytes (REL,CON)
+_CODE                               00004000    0000053D =        1341. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -42,29 +42,29 @@ _CODE                               00004000    0000050B =        1291. bytes (R
      00004195  inputsys_init                      cpct_keyboard
      00004196  inputsys_waitForInput              cpct_keyboard
      000041A3  inputsys_update                    cpct_keyboard
-     000041E6  _cpct_scanKeyboard_f               cpct_keyboard
-     000041E6  cpct_scanKeyboard_f_asm            cpct_keyboard
-     00004250  _cpct_isKeyPressed                 cpct_keyboard
-     00004250  cpct_isKeyPressed_asm              cpct_keyboard
-     0000425C  cpct_drawStringM1_asm              cpct_strings
-     00004280  cpct_drawCharM1_inner_asm          cpct_strings
-     000042C0  cpct_char2pxM1                     cpct_strings
-     000042D0  cpct_drawSprite_asm                cpct_sprites
-     00004370  _cpct_keyboardStatusBuffer         cpct_keyboard
-     0000437A  _cpct_isAnyKeyPressed_f            cpct_keyboard
-     0000437A  cpct_isAnyKeyPressed_f_asm         cpct_keyboard
-     00004395  cpct_zx7b_decrunch_s_asm           cpct_compression
-     000043D5  _cpct_waitVSYNC                    cpct_video
-     000043D5  cpct_waitVSYNC_asm                 cpct_video
-     000043DD  _cpct_disableFirmware              cpct_firmware
-     000043DD  _cpct_removeInterruptHandler       cpct_firmware
-     000043DD  cpct_disableFirmware_asm           cpct_firmware
-     000043DD  cpct_removeInterruptHandler_asm    cpct_firmware
-     000043ED  cpct_drawSolidBox_asm              cpct_sprites
-     00004499  _cpct_mode_rom_status              cpct_firmware
-     0000449A  cpct_getScreenPtr_asm              cpct_video
-     000044B6  cpct_setDrawCharM1_asm             cpct_strings
-     00004507  dc_mode1_ct                        
+     00004218  _cpct_scanKeyboard_f               cpct_keyboard
+     00004218  cpct_scanKeyboard_f_asm            cpct_keyboard
+     00004282  _cpct_isKeyPressed                 cpct_keyboard
+     00004282  cpct_isKeyPressed_asm              cpct_keyboard
+     0000428E  cpct_drawStringM1_asm              cpct_strings
+     000042B2  cpct_drawCharM1_inner_asm          cpct_strings
+     000042F2  cpct_char2pxM1                     cpct_strings
+     00004302  cpct_drawSprite_asm                cpct_sprites
+     000043A2  _cpct_keyboardStatusBuffer         cpct_keyboard
+     000043AC  _cpct_isAnyKeyPressed_f            cpct_keyboard
+     000043AC  cpct_isAnyKeyPressed_f_asm         cpct_keyboard
+     000043C7  cpct_zx7b_decrunch_s_asm           cpct_compression
+     00004407  _cpct_waitVSYNC                    cpct_video
+     00004407  cpct_waitVSYNC_asm                 cpct_video
+     0000440F  _cpct_disableFirmware              cpct_firmware
+     0000440F  _cpct_removeInterruptHandler       cpct_firmware
+     0000440F  cpct_disableFirmware_asm           cpct_firmware
+     0000440F  cpct_removeInterruptHandler_asm    cpct_firmware
+     0000441F  cpct_drawSolidBox_asm              cpct_sprites
+     000044CB  _cpct_mode_rom_status              cpct_firmware
+     000044CC  cpct_getScreenPtr_asm              cpct_video
+     000044E8  cpct_setDrawCharM1_asm             cpct_strings
+     00004539  dc_mode1_ct                        
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 

@@ -2689,7 +2689,7 @@ Hexadecimal [16-Bits]
                              30 
    40C6                      31 game_loop:
                              32 
-   40C6 CD D5 43      [17]   33    call cpct_waitVSYNC_asm
+   40C6 CD 07 44      [17]   33    call cpct_waitVSYNC_asm
                              34 
    40C9 CD FE 40      [17]   35    call man_entity_getArray
    40CC CD A3 41      [17]   36    call inputsys_update

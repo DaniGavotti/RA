@@ -2658,6 +2658,6 @@ Hexadecimal [16-Bits]
                               9 
    4097                      10 _main::
                              11    ;; Disable firmware to prevent it from interfering with string drawing
-   4097 CD DD 43      [17]   12    call cpct_disableFirmware_asm
+   4097 CD 0F 44      [17]   12    call cpct_disableFirmware_asm
    409A CD A7 40      [17]   13    call start_game
                              14 

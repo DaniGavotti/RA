@@ -63,10 +63,10 @@ Hexadecimal [16-Bits]
                              34 
    002A F1            [10]   35     pop af
    002B FE 00         [ 7]   36     cp #string_Init
-   002D 30 06         [12]   37     jr nc, _intro
+   002D 28 06         [12]   37     jr z, _intro
                              38 
    002F FE 01         [ 7]   39     cp #string_Over
-   0031 30 08         [12]   40     jr nc, _over
+   0031 28 08         [12]   40     jr z, _over
                              41 
    0033 18 0C         [12]   42     jr _erase
                              43 

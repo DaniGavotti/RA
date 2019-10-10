@@ -113,7 +113,7 @@ Hexadecimal [16-Bits]
    4133 3E 00         [ 7]   19     ld  a, #backgroun_color
    4135 06 50         [ 7]   20     ld  b, #screen_width    ;;w
    4137 0E C8         [ 7]   21     ld  c, #screen_heigth    ;;H
-   4139 CD ED 43      [17]   22     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+   4139 CD 1F 44      [17]   22     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
                              23 
                              24 
                              25 ;;Initializes the render system by storing a pointer to the first element of the entity array
@@ -123,7 +123,7 @@ Hexadecimal [16-Bits]
    413D 11 00 C0      [10]   29     ld de, #screen_start
    4140 DD 46 01      [19]   30     ld  b, e_y(ix)    ;;y
    4143 DD 4E 00      [19]   31     ld  c, e_x(ix)    ;;x
-   4146 CD 9A 44      [17]   32     call cpct_getScreenPtr_asm
+   4146 CD CC 44      [17]   32     call cpct_getScreenPtr_asm
                              33 
    4149 DD 74 08      [19]   34     ld e_lp_h(ix), h
    414C DD 75 07      [19]   35     ld e_lp_l(ix), l
@@ -152,7 +152,7 @@ Hexadecimal [16-Bits]
    4161 3E 00         [ 7]   58     ld  a, #backgroun_color
    4163 DD 46 02      [19]   59     ld  b, e_h(ix)    ;;w
    4166 DD 4E 03      [19]   60     ld  c, e_w(ix)    ;;H
-   4169 CD ED 43      [17]   61     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+   4169 CD 1F 44      [17]   61     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
                              62 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 6.
 Hexadecimal [16-Bits]
@@ -164,7 +164,7 @@ Hexadecimal [16-Bits]
    416C 11 00 C0      [10]   65     ld de, #screen_start
    416F DD 46 01      [19]   66     ld  b, e_y(ix)    ;;y
    4172 DD 4E 00      [19]   67     ld  c, e_x(ix)    ;;x
-   4175 CD 9A 44      [17]   68     call cpct_getScreenPtr_asm
+   4175 CD CC 44      [17]   68     call cpct_getScreenPtr_asm
    4178 DD 74 08      [19]   69     ld e_lp_h(ix), h
    417B DD 75 07      [19]   70     ld e_lp_l(ix), l
    417E EB            [ 4]   71     ex de, hl
@@ -173,7 +173,7 @@ Hexadecimal [16-Bits]
    417F DD 7E 06      [19]   74     ld a, e_sprite(ix)
    4182 DD 46 02      [19]   75     ld  b, e_h(ix)    ;;w
    4185 DD 4E 03      [19]   76     ld  c, e_w(ix)    ;;H
-   4188 CD ED 43      [17]   77     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
+   4188 CD 1F 44      [17]   77     call cpct_drawSolidBox_asm ;;For this first iteration Entities will not have strites and will be solid boxes instead
                              78 
                              79 
    418B F1            [10]   80     pop af

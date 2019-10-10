@@ -35,12 +35,20 @@ inputsys_update::
     ;;Check if character state is diferent from standing
 
     ld a, e_state(ix)
-    cp #0
-    jr nz, _notPressed_A
+    ;;If character state is jumping
+    cp #jumping
+    jr z, _notPressed_A
 
-    ;;reset velocity
+    ;;If charcter state is crouched
+    cp #crouched
+    jr nz, _begin
+    jr _crouched_player
+
+_begin:
+    ;;reset velocity and state
     ld e_vx(ix), #0 ;;x_speed
     ;;ld e_vy(ix), #0 ;;y_speed
+
 
     ;;Scan Keys
     call cpct_scanKeyboard_f_asm
@@ -61,22 +69,46 @@ _pressed_P:
     ld e_vx(ix), #1
 _notPressed_P:
 
-    ;;If Q pressed
+    ;;If Q pressed(Jump)
     ld hl, #Key_Q
     call cpct_isKeyPressed_asm
     jr z, _notPressed_Q
 _pressed_Q:
-    ld e_state(ix), #1
-    ld e_vy(ix), #-10
+    ld e_state(ix), #jumping
+    ld e_vy(ix), #-15
 _notPressed_Q:
 
-    ;;If A pressed
+
+    ;;If A pressed(Crouched)
     ld hl, #Key_A
     call cpct_isKeyPressed_asm
     jr z, _notPressed_A
 _pressed_A:
+    ;;if a is pressed the player will crouch
+    ld a, e_y(ix)
+    add #15
+    ld e_y(ix), a
+    ld e_h(ix), #16
+    ld e_state(ix), #crouched
     ld e_vy(ix), #4
 _notPressed_A:
+    jr _endInput
+
+_crouched_player:
+    ;;If A pressed(Crouched)
+    ld hl, #Key_A
+    call cpct_isKeyPressed_asm
+    jr z, _reset_state
+    jr _endInput
+_reset_state:
+    ;;If state crouched and A is no pressed reset player size
+    ld a, e_y(ix)
+    sub #17
+    ld e_y(ix), a
+    ld e_h(ix), #32
+    ld e_state(ix), #standing
+
+_endInput:
 
     ret
 

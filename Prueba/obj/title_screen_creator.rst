@@ -46,14 +46,14 @@ Hexadecimal [16-Bits]
    4067 16 00         [ 7]   17     ld    d, #0         ;; D = Background PEN (0)
    4069 1E 03         [ 7]   18     ld    e, #3         ;; E = Foreground PEN (3)
                              19 
-   406B CD B6 44      [17]   20     call cpct_setDrawCharM1_asm   ;; Set draw char colours
+   406B CD E8 44      [17]   20     call cpct_setDrawCharM1_asm   ;; Set draw char colours
                              21 
                              22     ;; Calculate a video-memory location for printing a string
    406E 11 00 C0      [10]   23     ld   de, #0xC000 ;; DE = Pointer to start of the screen
    4071 06 18         [ 7]   24     ld    b, #24                  ;; B = y coordinate (24 = 0x18)
    4073 0E 10         [ 7]   25     ld    c, #16                  ;; C = x coordinate (16 = 0x10)
                              26 
-   4075 CD 9A 44      [17]   27     call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
+   4075 CD CC 44      [17]   27     call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
                              28 
                              29     ;; Print the string in video memory
                              30     ;; HL already points to video memory, as it is the return
@@ -63,10 +63,10 @@ Hexadecimal [16-Bits]
                              34 
    4078 F1            [10]   35     pop af
    4079 FE 00         [ 7]   36     cp #string_Init
-   407B 30 06         [12]   37     jr nc, _intro
+   407B 28 06         [12]   37     jr z, _intro
                              38 
    407D FE 01         [ 7]   39     cp #string_Over
-   407F 30 08         [12]   40     jr nc, _over
+   407F 28 08         [12]   40     jr z, _over
                              41 
    4081 18 0C         [12]   42     jr _erase
                              43 
@@ -83,7 +83,7 @@ Hexadecimal [16-Bits]
                              54 
    4093                      55 _endif:
                              56 
-   4093 CD 5C 42      [17]   57     call cpct_drawStringM1_asm  ;; Draw the string
+   4093 CD 8E 42      [17]   57     call cpct_drawStringM1_asm  ;; Draw the string
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 4.
 Hexadecimal [16-Bits]
 
